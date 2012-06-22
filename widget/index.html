@@ -5,71 +5,10 @@
 		<title>Gignal #rf12</title>
 		<link rel="stylesheet" media="all" href="css/style.css"/>
 		<script src="js/jquery-1.7.2.min.js"></script>
-		<script src="js/jquery.masonry.min.js"></script>
+		<script src="js/masonry/jquery.masonry.min.js"></script>
 		<script src="js/hogan/web/builds/2.0.0/hogan-2.0.0.min.js"></script>
 		<script src="js/templates.js"></script>
-		<script>
-			function sortByDate (a, b) {
-				return new Date(a.created_on).getTime() - new Date(b.created_on).getTime();
-			}
-			function fetch (eventid) {
-				if (calling) {
-					return;
-				}
-				calling = true;
-				var url = 'http://dev.gignal.com/event/api/eventId/' + eventid;
-				var options = {
-					limit: 20,
-					offset: since_id
-				};
-				$.getJSON(url, options, function (data) {
-					calling = false;
-					since_id = data.since_id;
-					var nodes = [];
-					$.each(data.photos, function(key, val) {
-						val.type = 'image';
-						nodes.push(val);
-					});
-					$.each(data.text, function(key, val) {
-						val.type = 'text';
-						nodes.push(val);
-					});
-					nodes.sort(sortByDate);
-					$.each(nodes, function(key, node) {
-						switch (node.type) {
-							case 'text':
-								var output = templates.post.render(node);
-								break;
-							case 'image':
-								var output = templates.image.render(node);
-								break;
-						}
-						container.prepend(output).masonry('reload');
-					});
-				});
-			}
-			var eventid = 7;
-			var since_id = 0;
-			var delay = 5000;
-			var calling = false;
-			var container = null;
-			$(function(){
-			    container = $('#nodes');
-				container.imagesLoaded(function(){
-					container.masonry({
-						itemSelector: '.gig-outerbox',
-						isAnimated: true,
-						animationOptions: {
-							duration: 750,
-							easing: 'linear',
-							queue: false
-						}
-					});
-				});
-				fetch(eventid);
-				window.setInterval(fetch, delay, eventid);
-			});
-		</script>
+		<script src="js/main.js"></script>
 	</head>
 	<body>
 

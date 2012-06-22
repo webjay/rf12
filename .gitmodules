@@ -1,3 +1,6 @@
 [submodule "widget/js/hogan"]
 	path = widget/js/hogan
 	url = git://github.com/twitter/hogan.js.git
+[submodule "widget/js/masonry"]
+	path = widget/js/masonry
+	url = git://github.com/desandro/masonry.git
