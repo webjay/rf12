@@ -783,3 +783,7 @@ table {
   top: 7px;
   display: none;
 }
+.feature .gig-widbox {
+  font-size: 1.7em;
+  line-height: 1.3;
+}
