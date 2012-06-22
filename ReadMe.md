@@ -2,7 +2,7 @@
 
 ## Install
 
-1. git clone git@github.com:webjay/rf12.git
+1. git clone `git@github.com:webjay/rf12.git`
 2. cd rf12
 3. git submodule init
 4. git submodule update
