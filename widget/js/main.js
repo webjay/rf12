@@ -45,7 +45,18 @@ function fetch (eventid) {
 					output = '';
 					break;
 			}
-			container.prepend(output).masonry('reload');
+			container.prepend(output);
+			container.imagesLoaded(function(){
+				container.masonry({
+					itemSelector: '.gig-outerbox',
+					isAnimated: true,
+					animationOptions: {
+						duration: 750,
+						easing: 'linear',
+						queue: false
+					}
+				});
+			});
 		});
 	});
 }
@@ -53,21 +64,6 @@ function fetch (eventid) {
 /* OnLoad */
 $(function(){
 	container = $('#nodes');
-	// init Masonry
-	container.masonry({
-		itemSelector: '.gig-outerbox',
-		isAnimated: true,
-		animationOptions: {
-			duration: 750,
-			easing: 'linear',
-			queue: false
-		}
-	});
-	container.imagesLoaded(function(){
-		container.masonry({
-			itemSelector: '.gig-widimgbox'
-		});
-	});
 	// get data now
 	fetch(eventid);
 	// get data every {delay} millisecond
