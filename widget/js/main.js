@@ -45,7 +45,7 @@ function fetch (eventid) {
 					output = '';
 					break;
 			}
-			container.prepend(output).masonry('reload');
+			container.prepend(output);
 			container.imagesLoaded(function(){
 				container.masonry({
 					itemSelector: '.gig-outerbox',
