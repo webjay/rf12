@@ -14,7 +14,7 @@
       });
     });
     
-    //
+    /*
     $container.infinitescroll({
       navSelector  : '#page-nav',    // selector for the paged navigation 
       nextSelector : '#page-nav a',  // selector for the NEXT link (to page 2)
@@ -36,6 +36,7 @@
         });
       }
     );
+	*/
 
     $('.gig-widbox').hover(function(){
       
