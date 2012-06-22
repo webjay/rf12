@@ -46,6 +46,17 @@ function fetch (eventid) {
 					break;
 			}
 			container.prepend(output).masonry('reload');
+			container.imagesLoaded(function(){
+				container.masonry({
+					itemSelector: '.gig-outerbox',
+					isAnimated: true,
+					animationOptions: {
+						duration: 750,
+						easing: 'linear',
+						queue: false
+					}
+				});
+			});
 		});
 	});
 }
@@ -53,17 +64,7 @@ function fetch (eventid) {
 /* OnLoad */
 $(function(){
     container = $('#nodes');
-	container.imagesLoaded(function(){
-		container.masonry({
-			itemSelector: '.gig-outerbox',
-			isAnimated: true,
-			animationOptions: {
-				duration: 750,
-				easing: 'linear',
-				queue: false
-			}
-		});
-	});
+
 	// get data
 	fetch(eventid);
 	// get data every {delay} millisecond
