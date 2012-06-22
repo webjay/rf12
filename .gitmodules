@@ -1,0 +1,3 @@
+[submodule "widget/js/hogan"]
+	path = widget/js/hogan
+	url = git://github.com/twitter/hogan.js.git
