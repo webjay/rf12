@@ -1,5 +1,5 @@
 var eventid = 7;
-var since_id = 0;
+var since_time = 0;
 var delay = 5000; /* milliseconds */
 var calling = false; /* make sure only one getJSON runs at a time */
 var container = null;
@@ -17,11 +17,11 @@ function fetch (eventid) {
 	var url = api_url + eventid;
 	var options = {
 		limit: 20,
-		offset: since_id
+		sinceId: since_time
 	};
 	$.getJSON(url, options, function (data) {
 		calling = false;
-		since_id = data.since_id;
+		since_time = new Date().getTime();
 		var nodes = [];
 		$.each(data.photos, function(key, val) {
 			val.type = 'image';
@@ -46,26 +46,29 @@ function fetch (eventid) {
 					break;
 			}
 			container.prepend(output).masonry('reload');
-			container.imagesLoaded(function(){
-				container.masonry({
-					itemSelector: '.gig-outerbox',
-					isAnimated: true,
-					animationOptions: {
-						duration: 750,
-						easing: 'linear',
-						queue: false
-					}
-				});
-			});
 		});
 	});
 }
 
 /* OnLoad */
 $(function(){
-    container = $('#nodes');
-
-	// get data
+	container = $('#nodes');
+	// init Masonry
+	container.masonry({
+		itemSelector: '.gig-outerbox',
+		isAnimated: true,
+		animationOptions: {
+			duration: 750,
+			easing: 'linear',
+			queue: false
+		}
+	});
+	container.imagesLoaded(function(){
+		container.masonry({
+			itemSelector: '.gig-widimgbox'
+		});
+	});
+	// get data now
 	fetch(eventid);
 	// get data every {delay} millisecond
 	window.setInterval(fetch, delay, eventid);
