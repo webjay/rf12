@@ -758,14 +758,16 @@ table {
 }
 .gig-power{
   position: absolute;
-  right: 5px;
-  top: 5px;
+  right: 0px;
+  top: 0px;
   z-index: 99;
   opacity: 0.2;
   -moz-opacity: 0.2;
   filter:alpha(opacity=2);
   font-size: 10px;
   color: #fff;
+  background:#EC6500;
+  padding:5px 5px;
 }
 .gig-power img{
   vertical-align:middle;
