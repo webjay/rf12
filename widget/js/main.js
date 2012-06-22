@@ -16,7 +16,7 @@ function fetch (eventid) {
 	calling = true;
 	var url = api_url + eventid;
 	var options = {
-		limit: 20,
+		limit: 5,
 		sinceId: since_time
 	};
 	$.getJSON(url, options, function (data) {
