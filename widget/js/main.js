@@ -10,10 +10,6 @@ $(window).error(function (msg, url, line) {
 	// todo: post to Loggly
 });
 
-function sortByDate (a, b) {
-	return (new Date(a.created_on)).getTime() - (new Date(b.created_on)).getTime();
-}
-
 function getUrlParams () {
 	params = {};
 	re = /[?&]+([^=&]+)=([^&]*)/g
@@ -39,31 +35,16 @@ function fetch (eventid) {
 			return;
 		}
 		since_time = Math.round((new Date()).getTime() / 1000);
-		var nodes = [];
-		$.each(data.photos, function(key, val) {
-			if (val.thumb_photo !== null) {
-				val.type = 'image';
-				nodes.push(val);
+		// insert photos
+		$.each(data.photos, function(key, node) {
+			if (node.thumb_photo !== null) {
+				var output = templates.image.render(node)
+				container.prepend(output).masonry('reload');
 			}
 		});
-		$.each(data.text, function(key, val) {
-			val.type = 'text';
-			nodes.push(val);
-		});
-		nodes.sort(sortByDate);
-		var output = '';
-		$.each(nodes, function(key, node) {
-			switch (node.type) {
-				case 'text':
-					output = templates.post.render(node);
-					break;
-				case 'image':
-					output = templates.image.render(node);
-					break;
-				default:
-					output = '';
-					break;
-			}
+		// insert text
+		$.each(data.text, function(key, node) {
+			output = templates.post.render(node);
 			container.prepend(output).masonry('reload');
 		});
 	});
