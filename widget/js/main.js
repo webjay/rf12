@@ -1,10 +1,10 @@
 var eventid = 0; /* Must be set with ?eventid= */
 var limit = 10; /* Can be set with url parameter */
-var delay = 5000; /* milliseconds */
-var since_time = 0;
+var delay = 2500; /* milliseconds */
+var since_time = 0; /* last time we got some */
 var calling = false; /* make sure only one getJSON runs at a time */
 var container = null;
-var api_url = 'http://dev.gignal.com/event/api/eventId/';
+var api_url = 'http://api.gignal.com/event/api/eventId/';
 
 $(window).error(function (msg, url, line) {
 	// todo: post to Loggly
@@ -38,14 +38,12 @@ function fetch (eventid) {
 		// insert photos
 		$.each(data.photos, function(key, node) {
 			if (node.thumb_photo !== null) {
-				var output = templates.image.render(node)
-				container.prepend(output).masonry('reload');
+				container.prepend(templates.image.render(node)).masonry('reload');
 			}
 		});
 		// insert text
 		$.each(data.text, function(key, node) {
-			output = templates.post.render(node);
-			container.prepend(output).masonry('reload');
+			container.prepend(templates.post.render(node)).masonry('reload');
 		});
 	});
 	jqxhr.error(function(){
@@ -65,6 +63,9 @@ $(function(){
 	// limit?
 	if (parseInt(urlParams.limit, 10) > 0) {
 		limit = parseInt(urlParams.limit, 10);
+		if (limit > 100) {
+			limit = 100;
+		}
 	}
 	// init 
 	container = $('#nodes');
