@@ -1,6 +1,6 @@
 var eventid = 0; /* Must be set with ?eventid= */
 var limit = 10; /* Can be set with url parameter */
-var delay = 2500; /* milliseconds */
+var delay = 2000; /* milliseconds */
 var since_time = 0; /* last time we got some */
 var calling = false; /* make sure only one getJSON runs at a time */
 var container = null;
