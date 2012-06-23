@@ -1,7 +1,7 @@
-var eventid = 7;
-var limit = 10;
-var since_time = 0;
+var eventid = 0; /* Must be set with ?eventid= */
+var limit = 10; /* Can be set with url parameter */
 var delay = 5000; /* milliseconds */
+var since_time = 0;
 var calling = false; /* make sure only one getJSON runs at a time */
 var container = null;
 var api_url = 'http://dev.gignal.com/event/api/eventId/';
@@ -12,6 +12,15 @@ $(window).error(function (msg, url, line) {
 
 function sortByDate (a, b) {
 	return (new Date(a.created_on)).getTime() - (new Date(b.created_on)).getTime();
+}
+
+function getUrlParams () {
+	params = {};
+	re = /[?&]+([^=&]+)=([^&]*)/g
+	window.location.search.replace(re, function (str, key, value) {
+		params[key] = value;
+	});
+	return params;
 }
 
 function fetch (eventid) {
@@ -65,6 +74,18 @@ function fetch (eventid) {
 
 /* OnLoad */
 $(function(){
+	// get eventid
+	var urlParams = getUrlParams();
+	eventid = parseInt(urlParams.eventid, 10);
+	if (!eventid) {
+		console.error('I need an eventid');
+		return;
+	}
+	// limit?
+	if (parseInt(urlParams.limit, 10) > 0) {
+		limit = parseInt(urlParams.limit, 10);
+	}
+	// init 
 	container = $('#nodes');
 	container.imagesLoaded(function(){
 		container.masonry({
