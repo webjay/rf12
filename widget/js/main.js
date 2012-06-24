@@ -1,3 +1,5 @@
+'use strict';
+
 var eventid = 0; /* Must be set with ?eventid= */
 var limit = 10; /* Can be set with url parameter */
 var delay = 2000; /* How often we fetch in milliseconds */
@@ -9,15 +11,25 @@ var api_url = 'http://api.gignal.com/event/api/eventId/';
 
 function getUrlParams () {
 	var params = {};
-	var re = /[?&]+([^=&]+)=([^&]*)/g
+	var re = /[?&]+([^=&]+)=([^&]*)/g;
 	window.location.search.replace(re, function (str, key, value) {
 		params[key] = value;
 	});
 	return params;
 }
 
-function push (boxes) {
-	container.prepend(boxes).masonry('reload');
+function parseDate (datestr) {
+	var date_re = /(\d+)/g;
+	var parts = datestr.match(date_re);
+	return new Date(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]);
+}
+
+function sortByDate (a, b) {
+	return parseDate(a.created_on).getTime() - parseDate(b.created_on).getTime();
+}
+
+function push (box) {
+	container.prepend(box).masonry('reload');
 }
 
 function fetch (eventid) {
@@ -36,21 +48,47 @@ function fetch (eventid) {
 			return;
 		}
 		since_time = Math.round((new Date()).getTime() / 1000);
-		// insert photos
-		$.each(data.photos, function(key, node) {
-			if (node.thumb_photo !== null) {
-				// preload then insert
-				$(new Image()).attr('src', node.thumb_photo).load(function(){
-					push(templates.image.render(node));
+		var nodes = [];
+		async.parallel([
+			function (callback) { // photos
+				async.forEach(data.photos, function (node, callback) {
+					if (node.thumb_photo === null) {
+						return callback();
+					}
+					// preload then insert
+					$(new Image()).attr('src', node.thumb_photo).load(function(){
+						node.type = 'photo';
+						nodes.push(node);
+						callback();
+					});
+				}, function(){
+					callback();
 				});
+			},
+			function (callback) { // text
+				$.each(data.text, function (key, node) {
+					node.type = 'text';
+					nodes.push(node);
+				});
+				callback();
+			},
+		], function () {
+			// sort
+			nodes.sort(sortByDate);
+			for (var i = 0; i < nodes.length; i++) {
+				var node = nodes[i];
+				switch (node.type) {
+					case 'photo':
+						push(templates.image.render(node));
+						break;
+					case 'text':
+						push(templates.post.render(node));
+						break;
+				}
 			}
+			// remove > nodes_max from Masonry instance and the DOM.
+			container.masonry('remove', $('#nodes .gig-outerbox:gt(' + (nodes_max - 1) + ')'));
 		});
-		// insert text
-		$.each(data.text, function(key, node) {
-			push(templates.post.render(node));
-		});
-		// remove > nodes_max from Masonry instance and the DOM.
-		container.masonry('remove', $('#nodes .gig-outerbox:gt(' + (nodes_max - 1) + ')'));
 	});
 	jqxhr.error(function(){
 		calling = false;
@@ -63,7 +101,7 @@ $(function(){
 	var urlParams = getUrlParams();
 	eventid = parseInt(urlParams.eventid, 10);
 	if (!eventid) {
-		console.error('I need an eventid');
+		document.title = 'Error: I need an eventid';
 		return;
 	}
 	// limit?
