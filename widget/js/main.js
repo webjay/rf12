@@ -1,22 +1,23 @@
 var eventid = 0; /* Must be set with ?eventid= */
 var limit = 10; /* Can be set with url parameter */
-var delay = 2000; /* milliseconds */
+var delay = 2000; /* How often we fetch in milliseconds */
+var nodes_max = 100; /* maximum number of nodes */
 var since_time = 0; /* last time we got some */
-var calling = false; /* make sure only one getJSON runs at a time */
+var calling = false; /* makes sure only one getJSON runs at a time */
 var container = null;
 var api_url = 'http://api.gignal.com/event/api/eventId/';
 
-$(window).error(function (msg, url, line) {
-	// todo: post to Loggly
-});
-
 function getUrlParams () {
-	params = {};
-	re = /[?&]+([^=&]+)=([^&]*)/g
+	var params = {};
+	var re = /[?&]+([^=&]+)=([^&]*)/g
 	window.location.search.replace(re, function (str, key, value) {
 		params[key] = value;
 	});
 	return params;
+}
+
+function push (boxes) {
+	container.prepend(boxes).masonry('reload');
 }
 
 function fetch (eventid) {
@@ -38,13 +39,18 @@ function fetch (eventid) {
 		// insert photos
 		$.each(data.photos, function(key, node) {
 			if (node.thumb_photo !== null) {
-				container.prepend(templates.image.render(node)).masonry('reload');
+				// preload then insert
+				$(new Image()).attr('src', node.thumb_photo).load(function(){
+					push(templates.image.render(node));
+				});
 			}
 		});
 		// insert text
 		$.each(data.text, function(key, node) {
-			container.prepend(templates.post.render(node)).masonry('reload');
+			push(templates.post.render(node));
 		});
+		// remove > nodes_max from Masonry instance and the DOM.
+		container.masonry('remove', $('#nodes .gig-outerbox:gt(' + (nodes_max - 1) + ')'));
 	});
 	jqxhr.error(function(){
 		calling = false;
@@ -69,16 +75,15 @@ $(function(){
 	}
 	// init 
 	container = $('#nodes');
-	container.imagesLoaded(function(){
-		container.masonry({
-			itemSelector: '.gig-outerbox',
-			isAnimated: true,
-			animationOptions: {
-				duration: 750,
-				easing: 'linear',
-				queue: false
-			}
-		});
+	// Masonry options
+	container.masonry({
+		itemSelector: '.gig-outerbox',
+		isAnimated: true,
+		animationOptions: {
+			duration: 750,
+			easing: 'linear',
+			queue: false
+		}
 	});
 	// get data now
 	fetch(eventid);
