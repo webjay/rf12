@@ -75,6 +75,7 @@ function fetch (eventid) {
 		], function () {
 			// sort
 			nodes.sort(sortByDate);
+			// insert
 			for (var i = 0; i < nodes.length; i++) {
 				var node = nodes[i];
 				switch (node.type) {
