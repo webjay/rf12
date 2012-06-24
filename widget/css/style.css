@@ -691,7 +691,7 @@ table {
   margin:0;
   border-top: none;
 }
-.gig-outerbox:first-child:{
+.gig-outerbox:first-child{
    border:1px solid #e25b00;
 }
 .gig-widbox{
