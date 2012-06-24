@@ -689,6 +689,10 @@ table {
   background:#f2f2f4;
   border:1px solid #e25b00;
   margin:0;
+  border-top: none;
+}
+.gig-outerbox:first-child:{
+   border:1px solid #e25b00;
 }
 .gig-widbox{
   padding: 10px 20px;
