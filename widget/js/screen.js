@@ -80,10 +80,10 @@ function fetch (eventid) {
 				var node = nodes[i];
 				switch (node.type) {
 					case 'photo':
-						push(templates.image.render(node));
+						push(templates.screen_image.render(node));
 						break;
 					case 'text':
-						push(templates.post.render(node));
+						push(templates.screen_post.render(node));
 						break;
 				}
 			}
