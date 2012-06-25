@@ -20,14 +20,8 @@
 				<div class="top_area alpha omega">
 					<img class="float_left news_label" src="images/news_label.png" alt="news">
 					<div id="news">
-						<div class="grid_3 alpha">
-							<a href="#" target="_blank">New thing happening</a>
-							<p>This is some news. Super interesting, hopefully. </p>
-						</div>
-						<div class="grid_3">
-							<a href="#" target="_blank">No mud this year</a>
-							<p>That’s right folks, this year it’ll be just like in the press photos. </p>
-						</div>
+						<div class="grid_3 alpha">&nbsp;</div>
+						<div class="grid_3">&nbsp;</div>
 					</div>
 					<div class="grid_3 omega alignCenter">
 						<img src="images/hashtag.png" alt="#rf12">
@@ -43,11 +37,11 @@
 				<div class="grid_6 alpha push_mid">
 					<div class="videobox">
 						<h3 class="videoTitle">Concerts 2012</h3>
-						<iframe src="http://www.youtube.com/embed/Z6xrBxsr-80" width="391" height="220" seamless></iframe>
+						<div data-qbrick-ccid="34DC795A37AF38CA" data-qbrick-width="391" data-qbrick-height="220"></div>
 					</div>
 					<div class="videobox">
 						<h3 class="videoTitle">festival stories</h3>
-						<iframe src="http://www.youtube.com/embed/Z6xrBxsr-80" width="391" height="220" seamless></iframe>
+						<iframe src="http://www.youtube.com/embed/Z6xrBxsr-80?modestbranding=1" width="391" height="220" seamless></iframe>
 					</div>
 					<a href="http://www.youtube.com/user/roskildefestival" target="_blank" class="more_video">Watch more videos and concerts</a>
 				</div>
@@ -56,6 +50,28 @@
 				</div>
 			</div>
 		</div>
+		
+		<script src="http://player.qbrick.com/playerembed.js" async="async"></script>
+		<script src="widget/js/jquery-1.7.2.min.js"></script>
+		<script>
+			'use strict';
+			String.prototype.trunc = function (n) {
+				return this.substr(0, n - 1) + (this.length > n ? '&hellip;' : '');
+			};
+			//var rss_url = 'http://roskilde-festival.dk/rss.xml?tx_tcnews_pi1%5brss%5d=uk&tx_tcnews_pi1%5brsspid%5d=318&no_cache=1';
+			var rss_json_url = 'http://pipes.yahoo.com/pipes/pipe.run?_id=gH84AH3M2xGUtbMFdbq02Q&_render=json&rssUrl=http%3A%2F%2Froskilde-festival.dk%2Frss.xml%3Ftx_tcnews_pi1%255brss%255d%3Duk%26tx_tcnews_pi1%255brsspid%255d%3D318%26no_cache%3D1';
+			try {
+				jQuery.getJSON(rss_json_url, function (data) {
+					if (data.value && data.value.items && data.value.items.length) {
+						for (var i = 0; i < 2; i++) {
+							var a = jQuery('<a/>').attr('href', data.value.items[i].link).attr('target', '_blank').text(data.value.items[i].title);
+							var p = jQuery('<p/>').html(data.value.items[i].description.trunc(40));
+							jQuery('#news div:eq(' + i + ')').html(a).append(p);
+						}
+					}
+				});
+			} catch(e){}
+		</script>
 
 	</body>
 </html>
