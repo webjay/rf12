@@ -752,13 +752,14 @@ table {
   font-size: 11px;
 }
 .gig-morebtn{
-  padding:7px;
+  padding:9px;
   font-size:inherit;
-  border-radius: 7px 7px 0 0;
   position: absolute;
-  left: 46%;
+  left: 0;
   bottom: 0;
+  right:0;
   z-index: 99;
+  text-align:center;
 }
 .gig-power{
   position: absolute;
