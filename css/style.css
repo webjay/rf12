@@ -885,6 +885,9 @@ table {
 .push_mid{
   margin-left:46px;
 }
+.videobox{
+   padding-left:15px;
+}
 .videoTitle {
   font-size: 16px;
   margin-top: 5px;
