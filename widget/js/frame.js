@@ -136,7 +136,8 @@ $(function(){
 		}
 	});
 	// get data now
+	console.log(eventid);
 	fetch(eventid, true);
 	// get data every {delay} millisecond
-	window.setInterval(fetch, delay, eventid, true);
+	//window.setInterval(fetch, delay, eventid, true);
 });
