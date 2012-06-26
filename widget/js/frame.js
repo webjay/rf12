@@ -53,6 +53,7 @@ function fetch (eventid, prepend) {
 	try {
 		console.log(url);
 		var jqxhr = $.getJSON(url, options, function (data) {
+			console.dir(data);
 			calling = false;
 			if (data.text.length === 0 && data.photos.length === 0) {
 				return;
@@ -107,7 +108,7 @@ function fetch (eventid, prepend) {
 			calling = false;
 		});
 	} catch (e) {
-		alert(e);
+		console.dir(e);
 		calling = false;
 	}
 }
