@@ -100,10 +100,10 @@ function fetch (eventid, prepend) {
 				container.masonry('remove', $('#nodes .gig-outerbox:gt(' + (nodes_max - 1) + ')'));
 			});
 		});
-		jqxhr.error(function(){
+		jqxhr.error(function(e){
+			console.log(e);
 			calling = false;
 		});
-		console.log(jqxhr);
 	} catch (e) {
 		alert(e);
 		calling = false;
