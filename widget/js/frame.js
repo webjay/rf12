@@ -34,7 +34,7 @@ function fetch (eventid, prepend) {
 		return;
 	}
 	calling = true;
-	var url = api_url + eventid + '?callback=?';
+	var url = api_url + eventid;
 	if (prepend) {
 		fetch_time = Math.round((new Date()).getTime() / 1000);
 		var options = {
@@ -119,6 +119,10 @@ function Gignal_more () {
 $(function(){
 	// init 
 	jQuery.support.cors = true;
+	jQuery.ajaxSetup({
+		dataType: 'jsonp',
+		cache: true
+	});
 	container = $('#nodes');
 	// Masonry options
 	container.masonry({
