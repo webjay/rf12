@@ -34,7 +34,7 @@ function fetch (eventid, prepend) {
 		return;
 	}
 	calling = true;
-	var url = api_url + eventid;
+	var url = api_url + eventid + '?callback=?';
 	if (prepend) {
 		fetch_time = Math.round((new Date()).getTime() / 1000);
 		var options = {
