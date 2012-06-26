@@ -104,6 +104,7 @@ function fetch (eventid, prepend) {
 			calling = false;
 		});
 	} catch (e) {
+		alert(e);
 		calling = false;
 	}
 }
