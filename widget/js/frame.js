@@ -31,7 +31,6 @@ function push (box, prepend) {
 
 function fetch (eventid, prepend) {
 	if (calling) {
-		console.log(calling);
 		return;
 	}
 	calling = true;
@@ -104,6 +103,7 @@ function fetch (eventid, prepend) {
 		jqxhr.error(function(){
 			calling = false;
 		});
+		console.log(jqxhr);
 	} catch (e) {
 		alert(e);
 		calling = false;
