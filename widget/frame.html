@@ -6,6 +6,25 @@
 		<link rel="stylesheet" media="all" href="css/style.css"/>
 		<style>
 			html { overflow: -moz-scrollbars-none; }
+			.gig-morebtn {
+				font-size: inherit;
+				position: fixed;
+				left: 40%;
+				right:auto;
+				bottom: 0;
+				z-index: 99;
+				text-align: center;
+				padding: 0 10px;
+				height: 48px;
+			}
+			.gig-morebtn span {
+				display:block;
+			}
+			.gig-morebtn img {
+				border-top: 1px solid #993E00;
+				margin-top: 1px;
+				padding-top: 3px;
+			}
 		</style>
 		<script src="js/jquery-1.7.2.min.js"></script>
 		<script src="js/masonry/jquery.masonry.min.js"></script>
@@ -13,38 +32,17 @@
 		<script src="js/async/dist/async.min.js"></script>
 		<script src="js/frame_templates.js"></script>
 		<script src="js/frame.js"></script>
-		<style>
-		  .gig-morebtn {
-			font-size: inherit;
-			position: fixed;
-			left: 40%;
-			right:auto;
-			bottom: 0;
-			z-index: 99;
-			text-align: center;
-			padding: 0 10px;
-			height: 48px;
-		  }
-		  .gig-morebtn span{
-			display:block;
-		  }
-		  .gig-morebtn img{
-		  	border-top: 1px solid #993E00;
-			margin-top: 1px;
-			padding-top: 3px;
-		  }
-		</style>
 	</head>
 	<body>
+
 		<div class="container_12">
+			<div id="nodes" class="gig-widget-wrapper"></div>
 			<div>
 				<a href="#" class="gig-morebtn gig-actionbtn">
 					<span>Keep going</span>
 					<span><img src="images/kg_logo.png" alt="Gignal"></span>
 				</a>	
 			</div>
-			
-			<div id="nodes" class="gig-widget-wrapper"></div>
 		</div>
 
 	</body>

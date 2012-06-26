@@ -33,57 +33,63 @@ function fetch (eventid) {
 		limit: limit,
 		sinceId: since_time
 	};
-	var jqxhr = $.getJSON(url, options, function (data) {
+	try {
+		var jqxhr = $.getJSON(url, options, parse);
+		jqxhr.error(function(){
+			calling = false;
+		});
+	} catch (e) {
 		calling = false;
-		if (data.text.length === 0 && data.photos.length === 0) {
-			return;
-		}
-		since_time = Math.round((new Date()).getTime() / 1000);
-		var nodes = [];
-		async.parallel([
-			function (callback) { // photos
-				async.forEach(data.photos, function (node, callback) {
-					if (node.thumb_photo === null) {
-						return callback();
-					}
-					// preload then insert
-					$(new Image()).attr('src', node.thumb_photo).load(function(){
-						node.type = 'photo';
-						nodes.push(node);
-						callback();
-					});
-				}, function(){
+	}
+}
+
+function parse (data) {
+	calling = false;
+	if (data.text.length === 0 && data.photos.length === 0) {
+		return;
+	}
+	since_time = Math.round((new Date()).getTime() / 1000);
+	var nodes = [];
+	async.parallel([
+		function (callback) { // photos
+			async.forEach(data.photos, function (node, callback) {
+				if (node.thumb_photo === null) {
+					return callback();
+				}
+				// preload then insert
+				$(new Image()).attr('src', node.thumb_photo).load(function(){
+					node.type = 'photo';
+					nodes.push(node);
 					callback();
 				});
-			},
-			function (callback) { // text
-				$.each(data.text, function (key, node) {
-					node.type = 'text';
-					nodes.push(node);
-				});
+			}, function(){
 				callback();
-			},
-		], function () {
-			// sort
-			nodes.sort(sortByDate);
-			// insert
-			for (var i = 0; i < nodes.length; i++) {
-				var node = nodes[i];
-				switch (node.type) {
-					case 'photo':
-						push(templates.frame_image.render(node));
-						break;
-					case 'text':
-						push(templates.frame_post.render(node));
-						break;
-				}
+			});
+		},
+		function (callback) { // text
+			$.each(data.text, function (key, node) {
+				node.type = 'text';
+				nodes.push(node);
+			});
+			callback();
+		},
+	], function () {
+		// sort
+		nodes.sort(sortByDate);
+		// insert
+		for (var i = 0; i < nodes.length; i++) {
+			var node = nodes[i];
+			switch (node.type) {
+				case 'photo':
+					push(templates.frame_image.render(node));
+					break;
+				case 'text':
+					push(templates.frame_post.render(node));
+					break;
 			}
-			// remove > nodes_max from Masonry instance and the DOM.
-			container.masonry('remove', $('#nodes .gig-outerbox:gt(' + (nodes_max - 1) + ')'));
-		});
-	});
-	jqxhr.error(function(){
-		calling = false;
+		}
+		// remove > nodes_max from Masonry instance and the DOM.
+		container.masonry('remove', $('#nodes .gig-outerbox:gt(' + (nodes_max - 1) + ')'));
 	});
 }
 
