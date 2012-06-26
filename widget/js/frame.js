@@ -115,6 +115,7 @@ function Gignal_more () {
 /* OnLoad */
 $(function(){
 	// init 
+	jQuery.support.cors = true;
 	container = $('#nodes');
 	// Masonry options
 	container.masonry({
