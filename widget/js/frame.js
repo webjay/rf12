@@ -51,6 +51,7 @@ function fetch (eventid, prepend) {
 		};
 	}
 	try {
+		console.log(url);
 		var jqxhr = $.getJSON(url, options, function (data) {
 			calling = false;
 			if (data.text.length === 0 && data.photos.length === 0) {
