@@ -11,6 +11,7 @@ var container = null;
 var api_url = 'http://api.gignal.com/event/api/eventId/';
 var date_re = /(\d+)/g;
 var more_fetch_num = 0;
+var json_get = null;
 
 function parseDate (datestr) {
 	var parts = datestr.match(date_re);
@@ -27,6 +28,19 @@ function push (box, prepend) {
 	} else {
 		container.append(box).masonry('reload');
 	}
+}
+
+function msxdr (url, options, callback) {
+	var xdr = new XDomainRequest();
+	xdr.open('get', url);
+	xdr.onload = function () {
+		var JSON = $.parseJSON(xdr.responseText);
+		if (JSON == null || typeof JSON == 'undefined') {
+			JSON = $.parseJSON(data.firstChild.textContent);
+		}
+		callback(JSON);
+	};
+	xdr.send();
 }
 
 function fetch (eventid, prepend) {
@@ -52,7 +66,8 @@ function fetch (eventid, prepend) {
 	}
 	try {
 		console.log(url);
-		var jqxhr = $.getJSON(url, options, function (data) {
+		//var jqxhr = $.getJSON(url, options, function (data) {
+		var jqxhr = json_get(url, options, function (data) {
 			console.dir(data);
 			calling = false;
 			if (data.text.length === 0 && data.photos.length === 0) {
@@ -120,22 +135,13 @@ function Gignal_more () {
 /* OnLoad */
 $(function(){
 	// init 
-	jQuery.support.cors = true;
-	/*jQuery.ajaxSetup({
-		dataType: 'jsonp',
-		cache: true
-	});*/
-	// detect IE CORS transport
-	if ('XDomainRequest' in window && window.XDomainRequest !== null) {
-		// override default jQuery transport
-		jQuery.ajaxSettings.xhr = function() {
-			try { return new XDomainRequest(); }
-			catch(e) { }
-		};
-		// also, override the support check
-		jQuery.support.cors = true;
+	// hack
+	if ($.browser.msie && window.XDomainRequest) {
+		json_get = msxdr;
+	} else {
+		json_get = $.getJSON;
 	}
-	
+	//
 	container = $('#nodes');
 	// Masonry options
 	container.masonry({
@@ -148,7 +154,6 @@ $(function(){
 		}
 	});
 	// get data now
-	console.log(eventid);
 	fetch(eventid, true);
 	// get data every {delay} millisecond
 	//window.setInterval(fetch, delay, eventid, true);
