@@ -854,7 +854,7 @@ table {
   padding-top:10px;
   font-size:12px;
   color: #000;
-  line-height:18px;
+  line-height:16px;
   text-shadow: 0px 1px 2px #CCC;
 }
 .top_area a, .more_video{
@@ -883,7 +883,11 @@ table {
   font-size:9px;
 }
 .push_mid{
-  margin-left:46px;
+  margin-left: 39px;
+  margin-right: 0px;
+}
+.videobox{
+   padding-left:15px;
 }
 .videoTitle {
   font-size: 16px;

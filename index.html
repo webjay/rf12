@@ -1,57 +1,77 @@
-<!DOCTYPE HTML>
-<html lang="en-US">
-
+	<!doctype html>
+<html>
 	<head>
-		<meta charset="UTF-8">
-		<title>Roskilde Festival: Forside</title>
+		<meta charset="utf-8"/>
+		<title>Roskilde Festival: Gignal #rf12</title>
 		<link rel="stylesheet" media="all" href="css/style.css"/>
+		<style>
+			iframe[seamless] {
+				background-color: transparent;
+				border: 0px none transparent;
+				padding: 0px;
+				overflow: hidden;
+			}
+		</style>
 	</head>
-	
 	<body>
 
 		<div class="container_12">
 			<div class="widget_content group">
 				<div class="top_area alpha omega">
 					<img class="float_left news_label" src="images/news_label.png" alt="news">
-					<div class="grid_3 alpha">
-						
-						<a href="#">New thing happening
-</a>
-<p>This is some news. Super interesting, hopefully. </p>
-					</div>
-					<div class="grid_3">
-						<a href="#">No mud this year
-</a>
-<p>That’s right folks, this year it’ll be just like in the press photos. </p>
+					<div id="news">
+						<div class="grid_3 alpha">&nbsp;</div>
+						<div class="grid_3">&nbsp;</div>
 					</div>
 					<div class="grid_3 omega alignCenter">
-						<img src="images/hashtag.png" alt="">
+						<img src="images/hashtag.png" alt="#rf12">
 					</div>
 					<div class="grid_3 musicbox alignCenter alpha omega">
-						<img src="images/music_box.png" alt="">
+						<img src="images/music_box.png" alt="radio">
 						<div class="musicbox_links">
-							<a href="#">FOR MAC</a>
-							<a href="#">FOR PC</a>
+							<a href="http://www.festivalradio.dk/lyt.pls" target="_blank">for Mac</a>
+							<a href="http://www.festivalradio.dk/lyt.asx" target="_blank">for PC</a>
 						</div>
 					</div>
 				</div>
-				<div class="grid_6 alpha push_mid">
+				<div class="grid_6 alpha push_mid clear">
 					<div class="videobox">
-						<h3 class="videoTitle">
-							Concerts 2012
-						</h3>
-						<iframe width="391" height="220" src="http://www.youtube.com/embed/Z6xrBxsr-80" frameborder="0" allowfullscreen></iframe>
+						<h3 class="videoTitle">Concerts 2012</h3>
+						<div data-qbrick-ccid="34DC795A37AF38CA" data-qbrick-width="391" data-qbrick-height="220"></div>
 					</div>
 					<div class="videobox">
 						<h3 class="videoTitle">festival stories</h3>
-						<iframe width="391" height="220" src="http://www.youtube.com/embed/Z6xrBxsr-80" frameborder="0" allowfullscreen></iframe>
+						<iframe src="http://www.youtube.com/embed/Z6xrBxsr-80?modestbranding=1" width="391" height="220" seamless></iframe>
 					</div>
-					<a href="#" class="more_video">Watch more videos and concerts></a>
+					<a href="http://www.youtube.com/user/roskildefestival" target="_blank" class="more_video">Watch more videos and concerts</a>
 				</div>
 				<div class="grid_5 omega alpha">
-					<iframe src="widget/index.html" frameborder="0" width="445" scrolling="no" height="537"></iframe>
+					<iframe src="widget/frame.html" width="461" height="537" scrolling="yes"></iframe>
 				</div>
+			</div>
 		</div>
+		
+		<script src="http://player.qbrick.com/playerembed.js" async="async"></script>
+		<script src="widget/js/jquery-1.7.2.min.js"></script>
+		<script>
+			'use strict';
+			String.prototype.trunc = function (n) {
+				return this.substr(0, n - 1) + (this.length > n ? '&hellip;' : '');
+			};
+			//var rss_url = 'http://roskilde-festival.dk/rss.xml?tx_tcnews_pi1%5brss%5d=uk&tx_tcnews_pi1%5brsspid%5d=318&no_cache=1';
+			var rss_json_url = 'http://pipes.yahoo.com/pipes/pipe.run?_id=gH84AH3M2xGUtbMFdbq02Q&_render=json&rssUrl=http%3A%2F%2Froskilde-festival.dk%2Frss.xml%3Ftx_tcnews_pi1%255brss%255d%3Duk%26tx_tcnews_pi1%255brsspid%255d%3D318%26no_cache%3D1';
+			try {
+				jQuery.getJSON(rss_json_url, function (data) {
+					if (data.value && data.value.items && data.value.items.length) {
+						for (var i = 0; i < 2; i++) {
+							var a = jQuery('<a/>').attr('href', data.value.items[i].link).attr('target', '_blank').text(data.value.items[i].title);
+							var p = jQuery('<p/>').html(data.value.items[i].description.trunc(40));
+							jQuery('#news div:eq(' + i + ')').html(a).append(p);
+						}
+					}
+				});
+			} catch(e){}
+		</script>
+
 	</body>
-	
 </html>

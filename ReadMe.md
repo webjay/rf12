@@ -16,4 +16,5 @@
 
 #### Compile
 
-1. hulk widget/mustaches/*.mustache > widget/js/templates.js
+1. hulk widget/mustaches/frame_*.mustache > widget/js/frame_templates.js
+2. hulk widget/mustaches/screen_*.mustache > widget/js/screen_templates.js

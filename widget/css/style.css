@@ -507,7 +507,7 @@ table {
 .container_12 {
   margin-left: auto;
   margin-right: auto;
-  max-width: 888px;
+  max-width: 100%;
   /*border: 1px solid #E25B00;*/
   position: relative;
 }
@@ -689,6 +689,10 @@ table {
   background:#f2f2f4;
   border:1px solid #e25b00;
   margin:0;
+  border-top: none;
+}
+.gig-outerbox:first-child{
+   border:1px solid #e25b00;
 }
 .gig-widbox{
   padding: 10px 20px;
@@ -708,7 +712,7 @@ table {
 }
 .gig-widtitle{
   line-height: 18px;
-  margin-bottom: 7px;
+  margin-top: 7px;
   font-size: 13px;
   font-weight: normal;
   color: #e25b00;
@@ -748,13 +752,14 @@ table {
   font-size: 11px;
 }
 .gig-morebtn{
-  padding:7px;
+  padding:9px;
   font-size:inherit;
-  border-radius: 7px 7px 0 0;
-  position: absolute;
-  left: 46%;
+  position: fixed;
+  left: 0;
   bottom: 0;
+  right:0;
   z-index: 99;
+  text-align:center;
 }
 .gig-power{
   position: absolute;
@@ -782,4 +787,8 @@ table {
   right: 7px;
   top: 7px;
   display: none;
+}
+.feature .gig-widbox {
+  font-size: 1.7em;
+  line-height: 1.3;
 }
