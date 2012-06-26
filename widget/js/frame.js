@@ -30,15 +30,11 @@ function push (box, prepend) {
 	}
 }
 
-function msxdr (url, options, callback) {
+function msxdr (url, na, callback) {
 	var xdr = new XDomainRequest();
 	xdr.open('get', url);
 	xdr.onload = function () {
-		var JSON = $.parseJSON(xdr.responseText);
-		if (JSON == null || typeof JSON == 'undefined') {
-			JSON = $.parseJSON(data.firstChild.textContent);
-		}
-		callback(JSON);
+		callback($.parseJSON(xdr.responseText));
 	};
 	xdr.send();
 }
@@ -65,10 +61,8 @@ function fetch (eventid, prepend) {
 		};
 	}
 	try {
-		console.log(url);
 		//var jqxhr = $.getJSON(url, options, function (data) {
 		var jqxhr = json_get(url, options, function (data) {
-			console.dir(data);
 			calling = false;
 			if (data.text.length === 0 && data.photos.length === 0) {
 				return;
@@ -118,12 +112,9 @@ function fetch (eventid, prepend) {
 			});
 		});
 		jqxhr.error(function(e){
-			//alert(e);
-			console.dir(e);
 			calling = false;
 		});
 	} catch (e) {
-		console.dir(e);
 		calling = false;
 	}
 }
@@ -157,4 +148,5 @@ $(function(){
 	fetch(eventid, true);
 	// get data every {delay} millisecond
 	//window.setInterval(fetch, delay, eventid, true);
+	window.setInterval(function(){ fetch(eventid, true); }, delay);
 });
