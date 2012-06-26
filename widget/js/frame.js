@@ -101,7 +101,7 @@ function fetch (eventid, prepend) {
 			});
 		});
 		jqxhr.error(function(e){
-			alert(e);
+			//alert(e);
 			console.dir(e);
 			calling = false;
 		});
