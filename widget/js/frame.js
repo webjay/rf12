@@ -127,10 +127,10 @@ function Gignal_more () {
 $(function(){
 	// init 
 	// hack
-	if ($.browser.msie && window.XDomainRequest) {
+	if (jQuery.browser.msie && window.XDomainRequest) {
 		json_get = msxdr;
 	} else {
-		json_get = $.getJSON;
+		json_get = jQuery.getJSON;
 	}
 	//
 	container = $('#nodes');
