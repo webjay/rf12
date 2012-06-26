@@ -883,7 +883,8 @@ table {
   font-size:9px;
 }
 .push_mid{
-  margin-left:46px;
+  margin-left: 39px;
+  margin-right: 0px;
 }
 .videobox{
    padding-left:15px;
