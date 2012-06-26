@@ -704,6 +704,9 @@ table {
   max-height:134px;
   text-align:center;
 }
+.gig-widbox p, .gig-widtitle {
+   text-align: left;
+}
 .gig-widimgbox{
   padding: 10px;
   position: relative;
