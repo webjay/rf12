@@ -31,6 +31,7 @@ function push (box, prepend) {
 
 function fetch (eventid, prepend) {
 	if (calling) {
+		console.log(calling);
 		return;
 	}
 	calling = true;
