@@ -101,7 +101,8 @@ function fetch (eventid, prepend) {
 			});
 		});
 		jqxhr.error(function(e){
-			console.log(e);
+			alert(e);
+			console.dir(e);
 			calling = false;
 		});
 	} catch (e) {
