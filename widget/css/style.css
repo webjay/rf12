@@ -705,8 +705,8 @@ table {
   text-align:center;
 }
 .gig-outerbox:first-child .gig-widbox{
-   font-size: 19px;
-   line-height: 1.3;
+   font-size: 22px;
+   line-height: 1.1;
 }
 .gig-widbox p, .gig-widtitle {
    text-align: left;
