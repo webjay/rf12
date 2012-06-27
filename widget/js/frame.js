@@ -31,9 +31,21 @@ function push (box, prepend) {
 }
 
 function msxdr (url, na, callback) {
+	if (calling) {
+		return;
+	}
+	calling = true;
 	var xdr = new XDomainRequest();
 	xdr.open('get', url);
+	xdr.timeout = 10000;
+	xdr.onerror = function(){
+		calling = false;
+	};
+	xdr.ontimeout = function(){
+		calling = false;
+	};
 	xdr.onload = function () {
+		calling = false;
 		callback($.parseJSON(xdr.responseText));
 	};
 	xdr.send();
@@ -125,14 +137,9 @@ function Gignal_more () {
 
 /* OnLoad */
 $(function(){
+	// be nice to IE
+	json_get = (jQuery.browser.msie && window.XDomainRequest) ? msxdr : jQuery.getJSON;
 	// init 
-	// hack
-	if (jQuery.browser.msie && window.XDomainRequest) {
-		json_get = msxdr;
-	} else {
-		json_get = jQuery.getJSON;
-	}
-	//
 	container = $('#nodes');
 	// Masonry options
 	container.masonry({
@@ -147,6 +154,5 @@ $(function(){
 	// get data now
 	fetch(eventid, true);
 	// get data every {delay} millisecond
-	//window.setInterval(fetch, delay, eventid, true);
 	window.setInterval(function(){ fetch(eventid, true); }, delay);
 });
