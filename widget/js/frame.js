@@ -5,7 +5,7 @@ var limit = 10; /* Can be set with url parameter */
 var delay = 2000; /* How often we fetch in milliseconds */
 var nodes_max = 1000; /* maximum number of nodes */
 var since_time = 0; /* last time we got some */
-var fetch_time = 0; /* last time we tried */
+var start_time = Math.round((new Date()).getTime() / 1000);
 var calling = false; /* makes sure only one getJSON runs at a time */
 var container = null;
 var api_url = 'http://api.gignal.com/event/api/eventId/';
@@ -51,14 +51,13 @@ function msxdr (url, na, callback) {
 	xdr.send();
 }
 
-function fetch (eventid, prepend) {
+function fetch (prepend) {
 	if (calling) {
 		return;
 	}
 	calling = true;
 	var url = api_url + eventid;
 	if (prepend) {
-		fetch_time = Math.round((new Date()).getTime() / 1000);
 		var options = {
 			limit: limit,
 			sinceId: since_time
@@ -68,12 +67,11 @@ function fetch (eventid, prepend) {
 		var offset = more_fetch_num * limit;
 		var options = {
 			limit: limit,
-			sinceId: fetch_time,
+			sinceId: start_time,
 			offset: offset
 		};
 	}
 	try {
-		//var jqxhr = $.getJSON(url, options, function (data) {
 		var jqxhr = json_get(url, options, function (data) {
 			calling = false;
 			if (data.text.length === 0 && data.photos.length === 0) {
@@ -132,17 +130,15 @@ function fetch (eventid, prepend) {
 }
 
 function Gignal_more () {
-	//fetch(eventid, false);
+	var bottom = $('#nodes').height();
+	$('html, body').animate({ scrollTop: bottom }, 2000);
+	fetch(false);
 }
 
 /* OnLoad */
 $(function(){
 	// be nice to IE
-	if (jQuery.browser.msie && window.XDomainRequest) {
-		json_get = msxdr;
-	} else {
-		json_get = jQuery.getJSON;
-	}
+	json_get = (jQuery.browser.msie && window.XDomainRequest) ? msxdr : jQuery.getJSON;
 	// init 
 	container = $('#nodes');
 	// Masonry options
@@ -156,7 +152,7 @@ $(function(){
 		}
 	});
 	// get data now
-	fetch(eventid, true);
+	fetch(true);
 	// get data every {delay} millisecond
-	window.setInterval(function(){ fetch(eventid, true); }, delay);
+	window.setInterval(function(){ fetch(true); }, delay);
 });
