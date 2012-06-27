@@ -12,6 +12,7 @@ var api_url = 'http://api.gignal.com/event/api/eventId/';
 var date_re = /(\d+)/g;
 var more_fetch_num = 0;
 var json_get = null;
+var xdr;
 
 function parseDate (datestr) {
 	var parts = datestr.match(date_re);
@@ -35,7 +36,7 @@ function msxdr (url, na, callback) {
 		return;
 	}
 	calling = true;
-	var xdr = new XDomainRequest();
+	xdr = new XDomainRequest();
 	xdr.open('get', url);
 	xdr.timeout = 10000;
 	xdr.onerror = function(){
