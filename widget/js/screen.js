@@ -4,7 +4,7 @@ var eventid = 0; /* Must be set with ?eventid= */
 var limit = 10; /* Can be set with url parameter */
 var delay = 2000; /* How often we fetch in milliseconds */
 var nodes_max = 100; /* maximum number of nodes */
-var since_time = 0; /* last time we got some */
+var time_newest = 0; /* the freshest reult we have */
 var calling = false; /* makes sure only one getJSON runs at a time */
 var container = null;
 var api_url = 'http://api.gignal.com/event/api/eventId/';
@@ -41,20 +41,22 @@ function fetch (eventid) {
 	var url = api_url + eventid;
 	var options = {
 		limit: limit,
-		sinceId: since_time
+		sinceId: time_newest
 	};
 	var jqxhr = $.getJSON(url, options, function (data) {
 		calling = false;
 		if (data.text.length === 0 && data.photos.length === 0) {
 			return;
 		}
-		since_time = Math.round((new Date()).getTime() / 1000);
 		var nodes = [];
 		async.parallel([
 			function (callback) { // photos
 				async.forEach(data.photos, function (node, callback) {
 					if (node.thumb_photo === null) {
 						return callback();
+					}
+					if (time_newest < parseDate(node.saved_on).getTime()) {
+						time_newest = parseDate(node.saved_on).getTime();
 					}
 					// preload then insert
 					$(new Image()).attr('src', node.thumb_photo).load(function(){
@@ -68,6 +70,9 @@ function fetch (eventid) {
 			},
 			function (callback) { // text
 				$.each(data.text, function (key, node) {
+					if (time_newest < parseDate(node.saved_on).getTime()) {
+						time_newest = parseDate(node.saved_on).getTime();
+					}
 					node.type = 'text';
 					node.text = node.text.replace(re_links, '');
 					nodes.push(node);
@@ -110,9 +115,6 @@ $(function(){
 	// limit?
 	if (parseInt(urlParams.limit, 10) > 0) {
 		limit = parseInt(urlParams.limit, 10);
-		if (limit > 100) {
-			limit = 100;
-		}
 	}
 	// init 
 	container = $('#nodes');

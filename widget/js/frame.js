@@ -4,7 +4,7 @@ var eventid = 7; /* Must be set */
 var limit = 10; /* Can be set with url parameter */
 var delay = 5000; /* How often we fetch in milliseconds */
 var nodes_max = 1000; /* maximum number of nodes */
-var since_time = 0; /* last time we got some */
+var time_newest = 0; /* the freshest reult we have */
 var start_time = Math.round((new Date()).getTime() / 1000);
 var calling = false; /* makes sure only one getJSON runs at a time */
 var container;
@@ -57,7 +57,7 @@ function fetch (prepend) {
 	if (prepend) {
 		var options = {
 			limit: limit,
-			sinceId: since_time
+			sinceId: time_newest
 		};
 	} else {
 		more_fetch_num++;
@@ -74,13 +74,15 @@ function fetch (prepend) {
 			if (data.text.length === 0 && data.photos.length === 0) {
 				return;
 			}
-			since_time = Math.round((new Date()).getTime() / 1000);
 			var nodes = [];
 			async.parallel([
 				function (callback) { // photos
 					async.forEach(data.photos, function (node, callback) {
 						if (node.thumb_photo === null) {
 							return callback();
+						}
+						if (time_newest < parseDate(node.saved_on).getTime()) {
+							time_newest = parseDate(node.saved_on).getTime();
 						}
 						// preload then insert
 						$(new Image()).attr('src', node.thumb_photo).load(function(){
@@ -94,6 +96,9 @@ function fetch (prepend) {
 				},
 				function (callback) { // text
 					$.each(data.text, function (key, node) {
+						if (time_newest < parseDate(node.saved_on).getTime()) {
+							time_newest = parseDate(node.saved_on).getTime();
+						}
 						node.type = 'text';
 						node.text = node.text.replace(re_links, '<a href="$1" target="_blank">link</a>');
 						nodes.push(node);
