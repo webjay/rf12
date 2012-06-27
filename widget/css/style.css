@@ -687,12 +687,13 @@ table {
 /* main styls*/
 .gig-outerbox{
   background:#f2f2f4;
-  border:1px solid #e25b00;
   margin:0;
+  border: 1px solid #e25b00;
   border-top: none;
 }
 .gig-outerbox:first-child{
-   border:1px solid #e25b00;
+   /*border:1px solid #e25b00;*/
+   /*border-bottom: none;*/
 }
 .gig-widbox{
   padding: 10px 20px;
@@ -701,7 +702,7 @@ table {
   font-family:Georgia;
   line-height:20px;
   position: relative;
-  max-height:134px;
+  /*max-height:134px;*/
   text-align:center;
 }
 .gig-outerbox:first-child .gig-widbox{
