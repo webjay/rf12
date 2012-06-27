@@ -44,7 +44,7 @@ function msxdr (url, na, callback) {
 	xdr.ontimeout = function(){
 		calling = false;
 	};
-	xdr.onload = function () {
+	xdr.onload = function(){
 		calling = false;
 		callback($.parseJSON(xdr.responseText));
 	};

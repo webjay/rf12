@@ -81,17 +81,13 @@
 				function msxdr (url, na, callback) {
 					var xdr = new XDomainRequest();
 					xdr.open('get', url);
-					xdr.onload = function () {
+					xdr.timeout = 10000;
+					xdr.onload = function(){
 						callback($.parseJSON(xdr.responseText));
 					};
 					xdr.send();
 				}
-				var json_get = null;
-				if (jQuery.browser.msie && window.XDomainRequest) {
-					json_get = msxdr;
-				} else {
-					json_get = jQuery.getJSON;
-				}
+				var json_get = (jQuery.browser.msie && window.XDomainRequest) ? msxdr : jQuery.getJSON;
 				//var rss_url = 'http://roskilde-festival.dk/rss.xml?tx_tcnews_pi1%5brss%5d=uk&tx_tcnews_pi1%5brsspid%5d=318&no_cache=1';
 				var rss_json_url = 'http://pipes.yahoo.com/pipes/pipe.run?_id=gH84AH3M2xGUtbMFdbq02Q&_render=json&rssUrl=http%3A%2F%2Froskilde-festival.dk%2Frss.xml%3Ftx_tcnews_pi1%255brss%255d%3Duk%26tx_tcnews_pi1%255brsspid%255d%3D318%26no_cache%3D1';
 				try {
