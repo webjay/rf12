@@ -47,6 +47,7 @@ function msxdr (url, na, callback) {
 	};
 	xdr.onload = function(){
 		calling = false;
+		console.log(xdr);
 		callback($.parseJSON(xdr.responseText));
 	};
 	xdr.send();
