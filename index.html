@@ -95,14 +95,12 @@
 				xdr.open('get', 'http://pipes.yahoo.com/pipes/pipe.run?_id=gH84AH3M2xGUtbMFdbq02Q&_render=json&rssUrl=http%3A%2F%2Froskilde-festival.dk%2Frss.xml%3Ftx_tcnews_pi1%255brss%255d%3Duk%26tx_tcnews_pi1%255brsspid%255d%3D318%26no_cache%3D1');
 				//xdr.timeout = 10000;
 				xdr.onload = function(){
-					console.log($.parseJSON(xdr.responseText));
+					console.dir($.parseJSON(xdr.responseText));
 				};
 				xdr.onerror = function(e){
 					console.log(e);
 				};
 				xdr.send();
-				
-				console.log(xdr);
 				
 				
 				var json_get = (jQuery.browser.msie && window.XDomainRequest) ? msxdr : jQuery.getJSON;
