@@ -75,14 +75,16 @@
 		<script>
 			(function(){
 				'use strict';
+				var xdr;
 				String.prototype.trunc = function (n) {
 					return this.substr(0, n - 1) + (this.length > n ? '&hellip;' : '');
 				};
 				function msxdr (url, na, callback) {
-					var xdr = new XDomainRequest();
+					xdr = new XDomainRequest();
 					xdr.open('get', url);
 					xdr.timeout = 10000;
 					xdr.onload = function(){
+						console.log(xdr);
 						callback($.parseJSON(xdr.responseText));
 					};
 					xdr.send();
