@@ -2,7 +2,7 @@
 
 var eventid = 7; /* Must be set */
 var limit = 10; /* Can be set with url parameter */
-var delay = 2000; /* How often we fetch in milliseconds */
+var delay = 5000; /* How often we fetch in milliseconds */
 var nodes_max = 1000; /* maximum number of nodes */
 var since_time = 0; /* last time we got some */
 var start_time = Math.round((new Date()).getTime() / 1000);
@@ -34,7 +34,7 @@ function push (box, prepend) {
 function msxdr (url, na, callback) {
 	xdr = new XDomainRequest();
 	xdr.open('get', url);
-	xdr.timeout = 10000;
+	xdr.timeout = 20000;
 	xdr.onerror = function(){
 		calling = false;
 	};
