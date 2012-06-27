@@ -13,6 +13,7 @@ var date_re = /(\d+)/g;
 var more_fetch_num = 0;
 var json_get;
 var xdr;
+var re_links = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
 function parseDate (datestr) {
 	var parts = datestr.match(date_re);
@@ -94,6 +95,7 @@ function fetch (prepend) {
 				function (callback) { // text
 					$.each(data.text, function (key, node) {
 						node.type = 'text';
+						node.text = node.text.replace(re_links, '<a href="$1" target="_blank">link</a>');
 						nodes.push(node);
 					});
 					callback();

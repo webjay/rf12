@@ -8,6 +8,7 @@ var since_time = 0; /* last time we got some */
 var calling = false; /* makes sure only one getJSON runs at a time */
 var container = null;
 var api_url = 'http://api.gignal.com/event/api/eventId/';
+var re_links = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
 function getUrlParams () {
 	var params = {};
@@ -68,6 +69,7 @@ function fetch (eventid) {
 			function (callback) { // text
 				$.each(data.text, function (key, node) {
 					node.type = 'text';
+					node.text = node.text.replace(re_links, '');
 					nodes.push(node);
 				});
 				callback();
