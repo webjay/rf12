@@ -7,11 +7,11 @@ var nodes_max = 1000; /* maximum number of nodes */
 var since_time = 0; /* last time we got some */
 var start_time = Math.round((new Date()).getTime() / 1000);
 var calling = false; /* makes sure only one getJSON runs at a time */
-var container = null;
+var container;
 var api_url = 'http://api.gignal.com/event/api/eventId/';
 var date_re = /(\d+)/g;
 var more_fetch_num = 0;
-var json_get = null;
+var json_get;
 var xdr;
 
 function parseDate (datestr) {
@@ -32,10 +32,6 @@ function push (box, prepend) {
 }
 
 function msxdr (url, na, callback) {
-	if (calling) {
-		return;
-	}
-	calling = true;
 	xdr = new XDomainRequest();
 	xdr.open('get', url);
 	xdr.timeout = 10000;
@@ -46,8 +42,6 @@ function msxdr (url, na, callback) {
 		calling = false;
 	};
 	xdr.onload = function(){
-		calling = false;
-		console.log(xdr);
 		callback($.parseJSON(xdr.responseText));
 	};
 	xdr.send();
