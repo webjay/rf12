@@ -138,8 +138,11 @@ function Gignal_more () {
 /* OnLoad */
 $(function(){
 	// be nice to IE
-	json_get = (jQuery.browser.msie && window.XDomainRequest) ? msxdr : jQuery.getJSON;
-	console.dir(json_get);
+	if (jQuery.browser.msie && window.XDomainRequest) {
+		json_get = msxdr;
+	} else {
+		json_get = jQuery.getJSON;
+	}
 	// init 
 	container = $('#nodes');
 	// Masonry options
