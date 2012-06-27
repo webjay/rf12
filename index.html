@@ -85,6 +85,9 @@
 					xdr.onload = function(){
 						callback($.parseJSON(xdr.responseText));
 					};
+					xdr.onerror = function(e){
+						console.log(e);
+					};
 					xdr.send();
 				}
 				var json_get = (jQuery.browser.msie && window.XDomainRequest) ? msxdr : jQuery.getJSON;
@@ -100,7 +103,9 @@
 							}
 						}
 					});
-				} catch(e){}
+				} catch(e){
+					console.dir(e);
+				}
 			})();
 		</script>
 
