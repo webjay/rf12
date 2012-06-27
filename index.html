@@ -9,7 +9,15 @@
 				background-color: transparent;
 				border: 0px none transparent;
 				padding: 0px;
+				/*overflow: hidden;*/
+			}
+			#gignalframe { 
 				overflow: hidden;
+				width: 444px;
+			}
+			#gignal: {
+				overflow: scroll;
+				width: 452px;
 			}
 			#news {
 				float: left;
@@ -56,8 +64,8 @@
 					</div>
 					<p><a href="http://www.youtube.com/user/roskildefestival" target="_blank" class="more_video">Watch more videos and concerts</a></p>
 				</div>
-				<div class="grid_5 omega alpha">
-					<iframe src="widget/frame.html" width="461" height="537" seamless></iframe>
+				<div id="gignalframe" class="grid_5 omega alpha">
+					<iframe id="gignal" src="widget/frame.html" width="461" height="537" seamless></iframe>
 				</div>
 			</div>
 		</div>
@@ -65,7 +73,7 @@
 		<script src="http://player.qbrick.com/playerembed.js" async="async"></script>
 		<script src="widget/js/jquery-1.7.2.min.js"></script>
 		<script>
-			(function() {
+			(function(){
 				'use strict';
 				String.prototype.trunc = function (n) {
 					return this.substr(0, n - 1) + (this.length > n ? '&hellip;' : '');
