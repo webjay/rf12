@@ -88,7 +88,8 @@
 					xdr.onerror = function(e){
 						console.log(e);
 					};
-					xdr.send();
+					var x = xdr.send();
+					console.log(x);
 				}
 				var json_get = (jQuery.browser.msie && window.XDomainRequest) ? msxdr : jQuery.getJSON;
 				//var rss_url = 'http://roskilde-festival.dk/rss.xml?tx_tcnews_pi1%5brss%5d=uk&tx_tcnews_pi1%5brsspid%5d=318&no_cache=1';
