@@ -22,13 +22,12 @@ var Gignal_more; /* Global function to load more data */
 	var xdr; /* XDomainRequest */
 	
 	function parseDate (datestr) {
-		var parts = datestr.match(date_re);
-		return new Date(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]);
+		return Math.round(+new Date(datestr) / 1000);
 	}
 	
 	function sortByDate (a, b) {
 		//return parseDate(a.created_on).getTime() - parseDate(b.created_on).getTime();
-		return parseDate(a.saved_on).getTime() - parseDate(b.saved_on).getTime();
+		return parseDate(a.saved_on) - parseDate(b.saved_on);
 	}
 	
 	function push (box, prepend) {
@@ -90,8 +89,9 @@ var Gignal_more; /* Global function to load more data */
 							if (node.thumb_photo === null) {
 								return callback();
 							}
-							if (sinceTimePhoto < parseDate(node.saved_on).getTime()) {
-								sinceTimePhoto = parseDate(node.saved_on).getTime();
+							var t = parseDate(node.saved_on);
+							if (sinceTimePhoto < t) {
+								sinceTimePhoto = t;
 							}
 							// preload then insert
 							$(new Image()).attr('src', node.thumb_photo).load(function(){
@@ -105,8 +105,10 @@ var Gignal_more; /* Global function to load more data */
 					},
 					function (callback) { // text
 						$.each(data.text, function (key, node) {
-							if (sinceTimeText < parseDate(node.saved_on).getTime()) {
-								sinceTimeText = parseDate(node.saved_on).getTime();
+							var t = parseDate(node.saved_on);
+							if (sinceTimeText < t) {
+								console.log(node.saved_on);
+								sinceTimeText = t;
 							}
 							node.type = 'text';
 							node.text = node.text.replace(re_links, '<a href="$1" target="_top">link</a>');
