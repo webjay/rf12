@@ -84,7 +84,7 @@
 					xdr.open('get', url);
 					xdr.timeout = 10000;
 					xdr.onload = function(){
-						callback($.parseJSON(xdr.responseText));
+						callback(jQuery.parseJSON(xdr.responseText));
 					};
 					xdr.send();
 				}
@@ -96,7 +96,7 @@
 					json_get(rss_json_url, {}, function (data) {
 						if (data.value && data.value.items && data.value.items.length) {
 							for (var i = 0; i < 2; i++) {
-								var a = jQuery('<a/>').attr('href', data.value.items[i].link).attr('target', '_blank').text(data.value.items[i].title);
+								var a = jQuery('<a/>').attr('href', data.value.items[i].link).attr('target', '_top').text(data.value.items[i].title);
 								var p = jQuery('<p/>').html(data.value.items[i].description.trunc(40));
 								jQuery('#news div:eq(' + i + ')').html(a).append(p);
 							}
