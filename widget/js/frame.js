@@ -110,6 +110,7 @@ var Gignal_more; /* Global function to load more data */
 							if (firstTimeText > node.saved_on || firstTimeText === 0) {
 								firstTimeText = node.saved_on;
 							}
+							node.orange = (node.username === 'orangefeeling') ? 'orangefeeling' : '';
 							node.type = 'text';
 							node.text = node.text.replace(re_links, '<a href="$1" target="_top">link</a>');
 							nodes.push(node);

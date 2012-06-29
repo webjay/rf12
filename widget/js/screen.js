@@ -73,6 +73,7 @@
 						if (sinceTimeText < node.saved_on) {
 							sinceTimeText = node.saved_on;
 						}
+						node.orange = (node.username === 'orangefeeling') ? 'orangefeeling' : '';
 						node.type = 'text';
 						node.text = node.text.replace(re_links, '');
 						nodes.push(node);
