@@ -11,7 +11,9 @@ var Gignal_more; /* Global function to load more data */
 	var /* the freshest reult we have */
 		sinceTimePhoto = 0,
 		sinceTimeText = 0;
-	var start_time = Math.round((new Date()).getTime() / 1000);
+	var /* the oldest reult we have */
+		firstTimePhoto = 0,
+		firstTimeText = 0;
 	var more_fetch_num = 0; /* how many times we fetched older data */
 	var calling = false; /* makes sure only one getJSON runs at a time */
 	var container; /* where to put content */
@@ -66,8 +68,8 @@ var Gignal_more; /* Global function to load more data */
 			var offset = more_fetch_num * limit;
 			var options = {
 				limit: limit,
-				sinceTimePhoto: start_time,
-				sinceTimeText: start_time,
+				sinceTimePhoto: firstTimePhoto,
+				sinceTimeText: firstTimeText,
 				offset: offset
 			};
 		}
@@ -87,6 +89,9 @@ var Gignal_more; /* Global function to load more data */
 							if (sinceTimePhoto < node.saved_on) {
 								sinceTimePhoto = node.saved_on;
 							}
+							if (firstTimePhoto > node.saved_on || firstTimePhoto === 0) {
+								firstTimePhoto = node.saved_on;
+							}
 							// preload then insert
 							$(new Image()).attr('src', node.thumb_photo).load(function(){
 								node.type = 'photo';
@@ -101,6 +106,9 @@ var Gignal_more; /* Global function to load more data */
 						$.each(data.text, function (key, node) {
 							if (sinceTimeText < node.saved_on) {
 								sinceTimeText = node.saved_on;
+							}
+							if (firstTimeText > node.saved_on || firstTimeText === 0) {
+								firstTimeText = node.saved_on;
 							}
 							node.type = 'text';
 							node.text = node.text.replace(re_links, '<a href="$1" target="_top">link</a>');
