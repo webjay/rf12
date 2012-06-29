@@ -24,14 +24,7 @@
 		return params;
 	}
 	
-	// function parseDate (datestr) {
-	// 	//return Math.round(+new Date(datestr) / 1000);
-	// 	return Math.round((new Date(datestr)).get / 1000);
-	// }
-	
 	function sortByDate (a, b) {
-		//return parseDate(a.created_on).getTime() - parseDate(b.created_on).getTime();
-		//return parseDate(a.saved_on) - parseDate(b.saved_on);
 		return a.saved_on - b.saved_on;
 	}
 	

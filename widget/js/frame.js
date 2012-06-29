@@ -21,13 +21,7 @@ var Gignal_more; /* Global function to load more data */
 	var json_get; /* XDomainRequest vs jQuery.getJSON */
 	var xdr; /* XDomainRequest */
 	
-	// function parseDate (datestr) {
-	// 	return Math.round(+new Date(datestr) / 1000);
-	// }
-	
 	function sortByDate (a, b) {
-		//return parseDate(a.created_on).getTime() - parseDate(b.created_on).getTime();
-		//return parseDate(a.saved_on) - parseDate(b.saved_on);
 		return a.saved_on - b.saved_on;
 	}
 	
@@ -50,7 +44,7 @@ var Gignal_more; /* Global function to load more data */
 			calling = false;
 		};
 		xdr.onload = function(){
-			callback($.parseJSON(xdr.responseText));
+			callback(jQuery.parseJSON(xdr.responseText));
 		};
 		xdr.send();
 	}
