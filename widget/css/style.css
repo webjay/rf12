@@ -691,10 +691,6 @@ table {
   border: 1px solid #e25b00;
   border-top: none;
 }
-.gig-outerbox:first-child{
-   /*border:1px solid #e25b00;*/
-   /*border-bottom: none;*/
-}
 .gig-widbox{
   padding: 10px 20px;
   color: #2f2f2f;
@@ -795,8 +791,17 @@ table {
 .gig-actionbtns{
   position: absolute;
   right: 7px;
-  top: 7px;
+  bottom: 7px;
+  /* top: 7px; */  
   display: none;
+}
+.gig-actionbtns a {
+    text-decoration: none;
+    color: #EC6500;
+    font-size: 80%;
+}
+.gig-outerbox:hover .gig-actionbtns {
+    display: inline-block; 
 }
 .feature .gig-widbox {
   font-size: 1.7em;
