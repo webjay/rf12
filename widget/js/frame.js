@@ -83,6 +83,9 @@ var Gignal_more; /* Global function to load more data */
 				var nodes = [];
 				async.parallel([
 					function (callback) { // photos
+						if (!data.photos) {
+							return callback();
+						}
 						async.forEach(data.photos, function (node, callback) {
 							if (node.thumb_photo === null) {
 								return callback();
@@ -104,6 +107,9 @@ var Gignal_more; /* Global function to load more data */
 						});
 					},
 					function (callback) { // text
+						if (!data.text) {
+							return callback();
+						}
 						$.each(data.text, function (key, node) {
 							if (sinceTimeText < node.saved_on) {
 								sinceTimeText = node.saved_on;
