@@ -768,6 +768,7 @@ table {
   right:0;
   z-index: 1234;
   text-align:center;
+  cursor: pointer;
 }
 .gig-morebtn img {
     margin-bottom: 2px;
