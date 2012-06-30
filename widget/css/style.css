@@ -713,8 +713,9 @@ table {
   position: relative;
 }
 
-.gig-widbox > img{
-   max-height:121px;
+.gig-widbox img{
+   /* max-height:121px;*/
+   max-width: 180px;
 }
 .gig-widtitle{
   line-height: 18px;
