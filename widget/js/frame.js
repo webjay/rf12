@@ -112,7 +112,7 @@ var Gignal_more; /* Global function to load more data */
 							}
 							node.orange = (node.username === 'orangefeeling') ? 'orangefeeling' : '';
 							node.type = 'text';
-							node.text = node.text.replace(re_links, '<a href="$1" target="_top">link</a>');
+							node.text = node.text.replace(re_links, '<a href="$1" target="_top" class="nodelink">link</a>');
 							nodes.push(node);
 						});
 						callback();
