@@ -171,6 +171,14 @@ var Gignal_more; /* Global function to load more data */
 		fetch(true);
 		// get data every {delay} millisecond
 		window.setInterval(function(){ fetch(true); }, delay);
+		// modal click event
+		$(document).on('click', '.modal', function (e) {
+			e.preventDefault();
+			$(new Image()).attr('src', $(this).attr('href')).modal({
+				autoResize: true
+			});
+		});
+		
 	});
 
 })();
