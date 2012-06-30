@@ -37,9 +37,7 @@ var Gignal_more; /* Global function to load more data */
 	
 	function msxdr (url, na, callback) {
 		xdr = new XDomainRequest();
-		var retval = xdr.open('get', url);
-		console.log(retval);
-		xdr.timeout = 20000;
+		xdr.timeout = 3000;
 		xdr.onerror = function(){
 			calling = false;
 		};
@@ -49,6 +47,7 @@ var Gignal_more; /* Global function to load more data */
 		xdr.onload = function(){
 			callback(jQuery.parseJSON(xdr.responseText));
 		};
+		xdr.open('GET', url, true);
 		xdr.send();
 	}
 	
