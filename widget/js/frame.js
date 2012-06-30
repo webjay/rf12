@@ -176,9 +176,9 @@ var Gignal_more; /* Global function to load more data */
 			e.preventDefault();
 			$(new Image()).attr('src', $(this).attr('href')).modal({
 				autoResize: true,
-				position: ['8%'],
+				position: ['3%'],
 				minWidth: 400,
-				maxWidth: 400,
+				maxWidth: 415,
 				maxHeight: 500,
 				overlayClose: true
 			});
