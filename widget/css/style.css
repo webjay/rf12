@@ -760,6 +760,7 @@ table {
 }
 .gig-morebtn{
   padding:9px;
+  padding-bottom: 0;
   font-size:inherit;
   position: fixed;
   left: 0;
@@ -767,6 +768,9 @@ table {
   right:0;
   z-index: 99;
   text-align:center;
+}
+.gig-morebtn img {
+    margin-bottom: 2px;
 }
 .gig-power{
   position: absolute;
