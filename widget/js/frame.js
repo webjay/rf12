@@ -177,6 +177,10 @@ var Gignal_more; /* Global function to load more data */
 		fetch(true);
 		// get data every {delay} millisecond
 		window.setInterval(function(){ fetch(true); }, delay);
+		// load more
+		$(document).on('click', '.gig-morebtn', function(){
+			Gignal_more();
+		});
 		// modal click event
 		$(document).on('click', '.modal', function (e) {
 			e.preventDefault();
@@ -189,7 +193,6 @@ var Gignal_more; /* Global function to load more data */
 				overlayClose: true
 			});
 		});
-		
 	});
 
 })();

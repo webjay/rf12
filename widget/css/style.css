@@ -766,7 +766,7 @@ table {
   left: 0;
   bottom: 0;
   right:0;
-  z-index: 99;
+  z-index: 1234;
   text-align:center;
 }
 .gig-morebtn img {
