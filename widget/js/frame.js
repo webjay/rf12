@@ -175,7 +175,12 @@ var Gignal_more; /* Global function to load more data */
 		$(document).on('click', '.modal', function (e) {
 			e.preventDefault();
 			$(new Image()).attr('src', $(this).attr('href')).modal({
-				autoResize: true
+				autoResize: true,
+				position: ['8%'],
+				minWidth: 400,
+				maxWidth: 400,
+				maxHeight: 500,
+				overlayClose: true
 			});
 		});
 		
