@@ -6,7 +6,7 @@ var Gignal_more; /* Global function to load more data */
 	
 	var eventid = 7; /* Must be set */
 	var limit = 10; /* How many items to get */
-	var delay = 5000; /* How often we fetch in milliseconds */
+	var delay = (jQuery.browser.msie) ? 10000 : 5000; /* How often we fetch in milliseconds */
 	var nodes_max = 1000; /* maximum number of nodes in DOM */
 	var /* the freshest reult we have */
 		sinceTimePhoto = 0,
@@ -37,7 +37,8 @@ var Gignal_more; /* Global function to load more data */
 	
 	function msxdr (url, na, callback) {
 		xdr = new XDomainRequest();
-		xdr.open('get', url);
+		var retval = xdr.open('get', url);
+		console.log(retval);
 		xdr.timeout = 20000;
 		xdr.onerror = function(){
 			calling = false;
