@@ -66,7 +66,7 @@
 			more_fetch_num++;
 			var offset = more_fetch_num * limit;
 			var options = {
-				limit: limit,
+				limit: (limit / 2),
 				sinceTimePhoto: firstTimePhoto,
 				sinceTimeText: firstTimeText,
 				offset: offset
