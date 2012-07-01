@@ -164,6 +164,11 @@
 		// be nice to IE
 		//json_get = (jQuery.browser.msie && window.XDomainRequest) ? msxdr : jQuery.getJSON;
 		json_get = jQuery.getJSON;
+		jQuery.ajaxSetup({
+			jsonpCallback: 'callme',
+			cache: true,
+			timeout: 5000
+		});
 		// init 
 		container = $('#nodes');
 		// Masonry options
