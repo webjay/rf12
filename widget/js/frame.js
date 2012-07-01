@@ -55,7 +55,7 @@
 			return;
 		}
 		calling = true;
-		var url = api_url + eventid;
+		var url = api_url + eventid + '?callback=?';
 		if (prepend) {
 			var options = {
 				limit: limit,
@@ -162,7 +162,8 @@
 	/* OnLoad */
 	jQuery(document).ready(function($){
 		// be nice to IE
-		json_get = (jQuery.browser.msie && window.XDomainRequest) ? msxdr : jQuery.getJSON;
+		//json_get = (jQuery.browser.msie && window.XDomainRequest) ? msxdr : jQuery.getJSON;
+		json_get = jQuery.getJSON;
 		// init 
 		container = $('#nodes');
 		// Masonry options
