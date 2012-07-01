@@ -1,0 +1,49 @@
+<mockup version="1.0" skin="sketch" measuredW="1092" measuredH="639" mockupW="1024" mockupH="577">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::Image" x="68" y="63" w="1024" h="576" measuredW="77" measuredH="79" zOrder="0" locked="true" isInGroup="-1">
+      <controlProperties>
+        <text>screen</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Image" x="68" y="63" w="809" h="576" measuredW="77" measuredH="79" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>InfoTV</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::Image" x="877" y="63" w="215" h="576" measuredW="77" measuredH="79" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Gignal%20stream</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::Image" x="68" y="579" w="1024" h="60" measuredW="77" measuredH="79" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Sort%20%28widescreen%20illusion%29</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Image" x="68" y="63" w="1024" h="61" measuredW="77" measuredH="79" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Sort%20%28widescreen%20illusion%29</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Image" x="877" y="62" w="215" h="61" measuredW="77" measuredH="79" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>tag%20your%20tweets%20%23rf12</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Image" x="877" y="579" w="215" h="60" measuredW="77" measuredH="79" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Gignal%20logo</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Image" x="877" y="124" w="215" h="208" measuredW="77" measuredH="79" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Images</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Image" x="877" y="332" w="215" h="247" measuredW="77" measuredH="79" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Tweets</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
