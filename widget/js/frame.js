@@ -1,5 +1,3 @@
-var Gignal_more; /* Global function to load more data */
-
 (function(){
 	
 	'use strict';
@@ -35,7 +33,8 @@ var Gignal_more; /* Global function to load more data */
 		}
 	}
 	
-	function msxdr (url, na, callback) {
+	function msxdr (url, options, callback) {
+		url += '?' + decodeURIComponent(jQuery.param(options));
 		xdr = new XDomainRequest();
 		xdr.timeout = 3000;
 		xdr.onerror = function(){
@@ -98,6 +97,8 @@ var Gignal_more; /* Global function to load more data */
 							// preload then insert
 							$(new Image()).attr('src', node.thumb_photo).load(function(){
 								node.type = 'photo';
+								node.profilelink = 'http://' + node.service + '.com/';
+								node.profilelink += (node.username.length) ? node.username : node.user_id;
 								nodes.push(node);
 								callback();
 							});
@@ -118,6 +119,8 @@ var Gignal_more; /* Global function to load more data */
 							}
 							node.orange = (node.username === 'orangefeeling') ? 'orangefeeling' : '';
 							node.type = 'text';
+							node.profilelink = 'http://' + node.service + '.com/';
+							node.profilelink += (node.username.length) ? node.username : node.user_id;
 							node.text = node.text.replace(re_links, '<a href="$1" target="_top" class="nodelink">link</a>');
 							nodes.push(node);
 						});
@@ -150,8 +153,7 @@ var Gignal_more; /* Global function to load more data */
 		}
 	}
 	
-	/* set global function */
-	Gignal_more = function () {
+	function Gignal_more () {
 		var bottom = $('#nodes').height();
 		$('html, body').animate({ scrollTop: bottom }, 2000);
 		fetch(false);
