@@ -18,8 +18,6 @@
 	var api_url = 'http://api.gignal.com/event/api/eventId/';
 	var date_re = /(\d+)/g;
 	var re_links = /(\b(https?|ftp|file):\/\/[\-A-Z0-9+&@#\/%?=~_|!:,.;]*[\-A-Z0-9+&@#\/%=~_|])/ig;
-	var json_get; /* XDomainRequest vs jQuery.getJSON */
-	var xdr; /* XDomainRequest */
 	
 	function sortByDate (a, b) {
 		return a.saved_on - b.saved_on;
@@ -31,23 +29,6 @@
 		} else {
 			container.append(box).masonry('reload');
 		}
-	}
-	
-	function msxdr (url, options, callback) {
-		url += '?' + decodeURIComponent(jQuery.param(options));
-		xdr = new XDomainRequest();
-		xdr.timeout = 3000;
-		xdr.onerror = function(){
-			calling = false;
-		};
-		xdr.ontimeout = function(){
-			calling = false;
-		};
-		xdr.onload = function(){
-			callback(jQuery.parseJSON(xdr.responseText));
-		};
-		xdr.open('GET', url, true);
-		xdr.send();
 	}
 	
 	function fetch (prepend) {
@@ -73,7 +54,7 @@
 			};
 		}
 		try {
-			var jqxhr = json_get(url, options, function (data) {
+			var jqxhr = jQuery.getJSON(url, options, function (data) {
 				calling = false;
 				if (data.text.length === 0 && data.photos.length === 0) {
 					return;
@@ -161,9 +142,6 @@
 	
 	/* OnLoad */
 	jQuery(document).ready(function($){
-		// be nice to IE
-		//json_get = (jQuery.browser.msie && window.XDomainRequest) ? msxdr : jQuery.getJSON;
-		json_get = jQuery.getJSON;
 		jQuery.ajaxSetup({
 			jsonpCallback: 'callme',
 			cache: true,

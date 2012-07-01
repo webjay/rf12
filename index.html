@@ -86,25 +86,18 @@
 		<script>
 			(function(){
 				'use strict';
-				var xdr;
 				String.prototype.trunc = function (n) {
 					return this.substr(0, n - 1) + (this.length > n ? '&hellip;' : '');
 				};
-				function msxdr (url, na, callback) {
-					xdr = new XDomainRequest();
-					xdr.timeout = 10000;
-					xdr.onload = function(){
-						callback(jQuery.parseJSON(xdr.responseText));
-					};
-					xdr.open('GET', url, true);
-					xdr.send();
-				}
-				// hack for IE
-				var json_get = (jQuery.browser.msie && window.XDomainRequest) ? msxdr : jQuery.getJSON;
 				//var rss_url = 'http://roskilde-festival.dk/rss.xml?tx_tcnews_pi1%5brss%5d=uk&tx_tcnews_pi1%5brsspid%5d=318&no_cache=1';
-				var rss_json_url = 'http://pipes.yahoo.com/pipes/pipe.run?_id=gH84AH3M2xGUtbMFdbq02Q&_render=json&rssUrl=http%3A%2F%2Froskilde-festival.dk%2Frss.xml%3Ftx_tcnews_pi1%255brss%255d%3Duk%26tx_tcnews_pi1%255brsspid%255d%3D318%26no_cache%3D1';
+				var rss_json_url = 'http://pipes.yahoo.com/pipes/pipe.run?_id=gH84AH3M2xGUtbMFdbq02Q&_render=json&rssUrl=http%3A%2F%2Froskilde-festival.dk%2Frss.xml%3Ftx_tcnews_pi1%255brss%255d%3Duk%26tx_tcnews_pi1%255brsspid%255d%3D318%26no_cache%3D1&_callback=?';
+				jQuery.ajaxSetup({
+					jsonp: '_callback',
+					cache: true,
+					timeout: 5000
+				});
 				try {
-					json_get(rss_json_url, {}, function (data) {
+					jQuery.getJSON(rss_json_url, function (data) {
 						if (data.value && data.value.items && data.value.items.length) {
 							for (var i = 0; i < 2; i++) {
 								var a = jQuery('<a/>').attr('href', data.value.items[i].link).attr('target', '_top').text(data.value.items[i].title);
