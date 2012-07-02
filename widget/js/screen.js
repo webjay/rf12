@@ -3,6 +3,7 @@
 	'use strict';
 
 	var eventid = 0; /* Must be set */
+	var tags; /* tag msg */
 	var limit = 5; /* How many items to get */
 	var delay = 2000; /* How often we fetch in milliseconds */
 	var nodes_max = 50; /* maximum number of nodes in DOM */
@@ -81,6 +82,14 @@
 		if (!eventid) {
 			document.title = 'Error: I need an eventid';
 			return;
+		}
+		// tag msg
+		tags = urlParams.tagstr;
+		if (tags) {
+			var t = tags.split(',');
+			$('#tagmsg').append('#' + t.join(' #'));
+		} else {
+			$('#tagmsg').hide();
 		}
 		// limit?
 		if (parseInt(urlParams.limit, 10) > 0) {
