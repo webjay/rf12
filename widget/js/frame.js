@@ -153,6 +153,7 @@
 	
 	/* OnLoad */
 	jQuery(document).ready(function($){
+		// ajaxSetup
 		jQuery.ajaxSetup({
 			jsonpCallback: 'callme',
 			cache: false,

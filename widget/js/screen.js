@@ -101,9 +101,14 @@
 		// Masonry options
 		container_text.masonry({
 			itemSelector: '.box',
-			isAnimated: true,
 			columnWidth: function (containerWidth) {
 				return containerWidth;
+			},
+			isAnimated: true,
+			animationOptions: {
+				duration: 750,
+				easing: 'linear',
+				queue: false
 			}
 		});
 		container_photos.masonry({
