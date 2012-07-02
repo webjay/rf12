@@ -33,7 +33,7 @@
 	
 	function fetch (prepend) {
 		if (calling) {
-			return;
+			//return;
 		}
 		calling = true;
 		var url = api_url + eventid + '?callback=?';
@@ -173,7 +173,8 @@
 		// get data now
 		fetch(true);
 		// get data every {delay} millisecond
-		window.setInterval(function(){ fetch(true); }, delay);
+		//window.setInterval(function(){ fetch(true); }, delay);
+		setInterval(function(){ fetch(true); }, delay);
 		// load more
 		$(document).on('click', '.gig-morebtn', function(){
 			Gignal_more();
