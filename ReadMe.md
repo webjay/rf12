@@ -1,5 +1,7 @@
 # Gignal stream for #rf12
 
+Feel free to [fork us](https://github.com/webjay/rf12/wiki/Contribute).
+
 ## Install
 
 1. git clone `git@github.com:webjay/rf12.git`
