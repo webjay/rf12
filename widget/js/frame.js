@@ -155,7 +155,7 @@
 	jQuery(document).ready(function($){
 		jQuery.ajaxSetup({
 			jsonpCallback: 'callme',
-			cache: true,
+			cache: false,
 			timeout: 5000
 		});
 		// init 
