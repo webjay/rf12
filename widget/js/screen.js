@@ -119,6 +119,11 @@
 			$('#nodes').height(height);
 		});
 		$(document).resize();
+		// ajaxSetup
+		jQuery.ajaxSetup({
+			cache: false,
+			timeout: 5000
+		});
 		// get data now
 		fetch(eventid);
 		// get data every {delay} millisecond
