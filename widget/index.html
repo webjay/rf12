@@ -1,34 +1,30 @@
 <!doctype html>
 <html>
 	<head>
-		<meta charset="utf-8"/>
+		<meta charset="utf-8" />
 		<title>Gignal #rf12</title>
-		<link rel="stylesheet" media="all" href="css/style.css"/>
-		<style>
-			html { overflow: hidden; }
-			.gig-outerbox {
-				width: 99.9%;
-				border-left: none;
-				border-right: none;
-			}
-			.orangefeeling {
-				background-color: #eecdb5;
-			}
-		</style>
+		<link rel="stylesheet" href="css/screen.css" />
 		<script src="js/jquery-1.7.2.min.js"></script>
 		<script src="js/masonry/jquery.masonry.min.js"></script>
 		<script src="js/hogan/web/builds/2.0.0/hogan-2.0.0.min.js"></script>
-		<script src="js/async/dist/async.min.js"></script>
 		<script src="js/screen_templates.js"></script>
 		<script src="js/screen.js"></script>
 	</head>
 	<body>
 
-		<div class="container_12">
-			<div id="nodes" class="gig-widget-wrapper"></div>
-			<div>
-				<a href="http://www.gignal.com/" class="gig-morebtn gig-actionbtn"><img src="images/Gignal.png" alt="Gignal"/></a>	
-			</div>
+		<div id="!container">
+			
+			<header>
+				<p>tag your tweets'n'images with #rf12</p>
+			</header>
+
+			<article id="nodes">
+				<section id="photos"></section>
+				<section id="text"></section>
+			</article>
+
+			<footer></footer>
+		
 		</div>
 
 	</body>

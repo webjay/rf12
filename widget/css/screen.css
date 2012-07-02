@@ -1,0 +1,96 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font-family: Helvetica, Arial, "MS Trebuchet", sans-serif;
+}
+#container {
+	width: 215px;
+	height: 576px;
+	margin: 20px;
+	border: 1px solid #000;
+}
+header {
+	height: 61px;
+	background-color: #000;
+	text-align: center;
+}
+header p {
+	color: #fff;
+	padding: 10px;
+	margin: 0;
+}
+footer {
+	height: 60px;
+	background: #000 url('../images/Gignal-light.png') center center no-repeat;
+}
+
+.avatar, .service-avatar {
+	width: 18px;
+	height: 18px;
+	float: left;
+	margin-right: 8px;
+}
+
+.owner {
+	font-size: 85%;
+	white-space: nowrap;
+}
+
+#nodes {
+	height: 455px;
+	background-color: #f2f2f4;
+	font-size: 110%;
+	overflow: hidden;
+}
+.box {
+	border-bottom: 1px solid #993e00;
+}
+.box-img {
+	border: none;
+	display: inline-block;
+	width: 100%;
+	min-height: 50px;
+}
+#nodes .box-content {
+	padding: 8px;
+	word-wrap: break-word;
+}
+
+#nodes #photos {
+	height: 50%;
+	overflow: hidden;
+}
+#nodes #photos .thumb {
+	max-width: 50%;
+}
+
+#nodes #text {
+	/*height: 50%;*/
+	overflow: hidden;
+}
+
+
+/**** Masonry Transitions ****/
+.masonry, .masonry .masonry-brick {
+  -webkit-transition-duration: 0.7s;
+     -moz-transition-duration: 0.7s;
+      -ms-transition-duration: 0.7s;
+       -o-transition-duration: 0.7s;
+          transition-duration: 0.7s;
+}
+.masonry {
+  -webkit-transition-property: height, width;
+     -moz-transition-property: height, width;
+      -ms-transition-property: height, width;
+       -o-transition-property: height, width;
+          transition-property: height, width;
+}
+.masonry .masonry-brick {
+  -webkit-transition-property: left, right, top;
+     -moz-transition-property: left, right, top;
+      -ms-transition-property: left, right, top;
+       -o-transition-property: left, right, top;
+          transition-property: left, right, top;
+}

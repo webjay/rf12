@@ -3,14 +3,16 @@
 	'use strict';
 
 	var eventid = 0; /* Must be set */
-	var limit = 10; /* How many items to get */
+	var limit = 5; /* How many items to get */
 	var delay = 2000; /* How often we fetch in milliseconds */
-	var nodes_max = 100; /* maximum number of nodes in DOM */
+	var nodes_max = 50; /* maximum number of nodes in DOM */
 	var /* the freshest reult we have */
 		sinceTimePhoto = 0,
 		sinceTimeText = 0;
 	var calling = false; /* makes sure only one getJSON runs at a time */
-	var container; /* where to put content */
+	var /* where to put content */
+		container_photos,
+		container_text;
 	var api_url = 'http://api.gignal.com/event/api/eventId/';
 	var date_re = /(\d+)/g;
 	var re_links = /(\b(https?|ftp|file):\/\/[\-A-Z0-9+&@#\/%?=~_|!:,.;]*[\-A-Z0-9+&@#\/%=~_|])/ig;
@@ -22,14 +24,6 @@
 			params[key] = value;
 		});
 		return params;
-	}
-	
-	function sortByDate (a, b) {
-		return a.saved_on - b.saved_on;
-	}
-	
-	function push (box) {
-		container.prepend(box).masonry('reload');
 	}
 	
 	function fetch (eventid) {
@@ -48,56 +42,31 @@
 			if (data.text.length === 0 && data.photos.length === 0) {
 				return;
 			}
-			var nodes = [];
-			async.parallel([
-				function (callback) { // photos
-					async.forEach(data.photos, function (node, callback) {
-						if (node.thumb_photo === null) {
-							return callback();
-						}
-						if (sinceTimePhoto < node.saved_on) {
-							sinceTimePhoto = node.saved_on;
-						}
-						// preload then insert
-						$(new Image()).attr('src', node.thumb_photo).load(function(){
-							node.type = 'photo';
-							nodes.push(node);
-							callback();
-						});
-					}, function(){
-						callback();
-					});
-				},
-				function (callback) { // text
-					$.each(data.text, function (key, node) {
-						if (sinceTimeText < node.saved_on) {
-							sinceTimeText = node.saved_on;
-						}
-						node.orange = (node.username === 'orangefeeling') ? 'orangefeeling' : '';
-						node.type = 'text';
-						node.text = node.text.replace(re_links, '');
-						nodes.push(node);
-					});
-					callback();
-				},
-			], function () {
-				// sort
-				nodes.sort(sortByDate);
-				// insert
-				for (var i = 0; i < nodes.length; i++) {
-					var node = nodes[i];
-					switch (node.type) {
-						case 'photo':
-							push(templates.screen_image.render(node));
-							break;
-						case 'text':
-							push(templates.screen_post.render(node));
-							break;
-					}
+			$.each(data.text, function (k, node) {
+				if (sinceTimeText < node.saved_on) {
+					sinceTimeText = node.saved_on;
 				}
-				// remove > nodes_max from Masonry instance and the DOM.
-				container.masonry('remove', $('#nodes .gig-outerbox:gt(' + (nodes_max - 1) + ')'));
+				node.orange = (node.username === 'orangefeeling') ? 'orangefeeling' : '';
+				node.text = node.text.replace(re_links, '');
+				container_text.prepend(templates.screen_post.render(node)).masonry('reload');
 			});
+			/*
+			$.each(data.photos, function (k, node) {
+				if (node.thumb_photo === null) {
+					return callback();
+				}
+				if (sinceTimePhoto < node.saved_on) {
+					sinceTimePhoto = node.saved_on;
+				}
+				// preload then insert
+				$(new Image()).attr('src', node.thumb_photo).load(function(){
+					container_photos.prepend(templates.screen_image.render(node)).masonry('reload');
+				});
+			});
+			*/
+			// remove > nodes_max from Masonry instance and the DOM.
+			//container_text.masonry('remove', $('#nodes .box:gt(' + (nodes_max - 1) + ')'));
+			//container_photos.masonry('remove', $('#nodes .box:gt(' + (nodes_max - 1) + ')'));
 		});
 		jqxhr.error(function(){
 			calling = false;
@@ -118,15 +87,21 @@
 			limit = parseInt(urlParams.limit, 10);
 		}
 		// init 
-		container = $('#nodes');
+		container_photos = $('#photos');
+		container_text = $('#text');
 		// Masonry options
-		container.masonry({
-			itemSelector: '.gig-outerbox',
+		container_text.masonry({
+			itemSelector: '.box',
 			isAnimated: true,
-			animationOptions: {
-				duration: 750,
-				easing: 'linear',
-				queue: false
+			columnWidth: function (containerWidth) {
+				return containerWidth;
+			}
+		});
+		container_photos.masonry({
+			itemSelector: '.box',
+			isAnimated: true,
+			columnWidth: function (containerWidth) {
+				return containerWidth / 3;
 			}
 		});
 		// get data now
