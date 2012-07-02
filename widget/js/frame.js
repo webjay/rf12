@@ -4,7 +4,7 @@
 	
 	var eventid = 7; /* Must be set */
 	var limit = 10; /* How many items to get */
-	var delay = (jQuery.browser.msie) ? 10000 : 5000; /* How often we fetch in milliseconds */
+	var delay = 5000; /* How often we fetch in milliseconds */
 	var nodes_max = 1000; /* maximum number of nodes in DOM */
 	var /* the freshest reult we have */
 		sinceTimePhoto = 0,
@@ -33,7 +33,7 @@
 	
 	function fetch (prepend) {
 		if (calling) {
-			//return;
+			return;
 		}
 		calling = true;
 		var url = api_url + eventid + '?callback=?';
@@ -155,7 +155,7 @@
 	jQuery(document).ready(function($){
 		jQuery.ajaxSetup({
 			jsonpCallback: 'callme',
-			cache: true,
+			cache: false,
 			timeout: 5000
 		});
 		// init 
@@ -171,10 +171,9 @@
 			}
 		});
 		// get data now
-		fetch(true);
+		fetch();
 		// get data every {delay} millisecond
-		//window.setInterval(function(){ fetch(true); }, delay);
-		setInterval(function(){ fetch(true); }, delay);
+		window.setInterval(fetch, delay, true);
 		// load more
 		$(document).on('click', '.gig-morebtn', function(){
 			Gignal_more();
