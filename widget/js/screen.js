@@ -113,6 +113,12 @@
 				return containerWidth / 3;
 			}
 		});
+		// set height
+		$(document).resize(function(){
+			var height = $(document).height() - ($('header').height() + $('footer').height());
+			$('#nodes').height(height);
+		});
+		$(document).resize();
 		// get data now
 		fetch(eventid);
 		// get data every {delay} millisecond
