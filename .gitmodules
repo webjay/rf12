@@ -4,6 +4,3 @@
 [submodule "widget/js/masonry"]
 	path = widget/js/masonry
 	url = git://github.com/desandro/masonry.git
-[submodule "widget/js/async"]
-	path = widget/js/async
-	url = git://github.com/caolan/async.git
