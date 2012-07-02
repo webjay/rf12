@@ -7,7 +7,7 @@ body {
 }
 
 header {
-	height: 61px;
+	height: 106px;
 	background-color: #000;
 	text-align: center;
 }
@@ -17,7 +17,7 @@ header p {
 	margin: 0;
 }
 footer {
-	height: 60px;
+	height: 106px;
 	background: #000 url('../images/Gignal-light.png') center center no-repeat;
 }
 
@@ -34,9 +34,9 @@ footer {
 }
 
 #nodes {
-	height: 455px;
+	/*height: 455px;*/
 	background-color: #f2f2f4;
-	font-size: 110%;
+	font-size: 115%;
 	overflow: hidden;
 }
 .box {
