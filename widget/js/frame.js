@@ -19,16 +19,41 @@
 	var date_re = /(\d+)/g;
 	var re_links = /(\b(https?|ftp|file):\/\/[\-A-Z0-9+&@#\/%?=~_|!:,.;]*[\-A-Z0-9+&@#\/%=~_|])/ig;
 	
-	function sortByDate (a, b) {
-		return a.saved_on - b.saved_on;
-	}
-	
 	function push (box, prepend) {
 		if (prepend) {
 			container.prepend(box).masonry('reload');
 		} else {
 			container.append(box).masonry('reload');
 		}
+	}
+
+	function node_text (node, prepend) {
+		if (sinceTimeText < node.saved_on) {
+			sinceTimeText = node.saved_on;
+		}
+		if (firstTimeText > node.saved_on || firstTimeText === 0) {
+			firstTimeText = node.saved_on;
+		}
+		node.orange = (node.username === 'orangefeeling') ? 'orangefeeling' : '';
+		node.profilelink = 'http://' + node.service + '.com/';
+		node.profilelink += (node.username.length) ? node.username : node.user_id;
+		node.text = node.text.replace(re_links, '<a href="$1" target="_top" class="nodelink">link</a>');
+		push(templates.frame_post.render(node), prepend);
+	}
+	
+	function node_photo (node, prepend) {
+		if (node.thumb_photo === null) {
+			return;
+		}
+		if (sinceTimePhoto < node.saved_on) {
+			sinceTimePhoto = node.saved_on;
+		}
+		if (firstTimePhoto > node.saved_on || firstTimePhoto === 0) {
+			firstTimePhoto = node.saved_on;
+		}
+		node.profilelink = 'http://' + node.service + '.com/';
+		node.profilelink += (node.username.length) ? node.username : node.user_id;
+		push(templates.frame_image.render(node), prepend);
 	}
 	
 	function fetch (prepend) {
@@ -59,83 +84,19 @@
 				if (data.text.length === 0 && data.photos.length === 0) {
 					return;
 				}
-				function f() {
-					// sort
-					nodes.sort(sortByDate);
-					// insert
-					for (var i = 0; i < nodes.length; i++) {
-						var node = nodes[i];
-						switch (node.type) {
-							case 'photo':
-								push(templates.frame_image.render(node), prepend);
-								break;
-							case 'text':
-								push(templates.frame_post.render(node), prepend);
-								break;
-						}
+				for (var n = 0; n < limit; n++) {
+					if (data.text[n]) {
+						node_text(data.text[n], prepend);
 					}
-					// remove > nodes_max from Masonry instance and the DOM.
-					container.masonry('remove', $('#nodes .gig-outerbox:gt(' + (nodes_max - 1) + ')'));
-				};
-				var nodes = [];
-				var loading_images = 0;
-				(function (callback) { // photos
-					if (!data.photos) {
-						return callback();
+					if (data.photos[n]) {
+						node_photo(data.photos[n], prepend);
 					}
-					$.each(data.photos, function(key, node){
-						if (node.thumb_photo === null) {
-							return callback();
-						}
-						if (sinceTimePhoto < node.saved_on) {
-							sinceTimePhoto = node.saved_on;
-						}
-						if (firstTimePhoto > node.saved_on || firstTimePhoto === 0) {
-							firstTimePhoto = node.saved_on;
-						}
-						// preload then insert
-						var img = document.createElement('img');
-						img.src = node.thumb_photo;
-						loading_images++;
-						img.onload = function(){
-							node.type = 'photo';
-							node.profilelink = 'http://' + node.service + '.com/';
-							node.profilelink += (node.username.length) ? node.username : node.user_id;
-							nodes.push(node);
-							loading_images--;
-							if (loading_images == 0) {
-								callback();
-							}
-						};
-						img.onerror = img.onabort = function() {
-							loading_images--;
-							if (loading_images == 0) {
-								callback();
-							}
-						};
+				}
+				container.imagesLoaded(function(){
+					container.masonry({
+						itemSelector: '.gig-outerbox'
 					});
-					callback();
-				}(f));
-				(function (callback) { // text
-					if (!data.text) {
-						return callback();
-					}
-					$.each(data.text, function (key, node) {
-						if (sinceTimeText < node.saved_on) {
-							sinceTimeText = node.saved_on;
-						}
-						if (firstTimeText > node.saved_on || firstTimeText === 0) {
-							firstTimeText = node.saved_on;
-						}
-						node.orange = (node.username === 'orangefeeling') ? 'orangefeeling' : '';
-						node.type = 'text';
-						node.profilelink = 'http://' + node.service + '.com/';
-						node.profilelink += (node.username.length) ? node.username : node.user_id;
-						node.text = node.text.replace(re_links, '<a href="$1" target="_top" class="nodelink">link</a>');
-						nodes.push(node);
-					});
-					callback();
-				}(f));
+				});
 			});
 			jqxhr.error(function(e){
 				calling = false;
@@ -172,7 +133,7 @@
 			}
 		});
 		// get data now
-		fetch();
+		fetch(true);
 		// get data every {delay} millisecond
 		window.setInterval(fetch, delay, true);
 		// load more
