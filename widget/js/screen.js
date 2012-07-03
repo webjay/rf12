@@ -4,7 +4,7 @@
 
 	var eventid = 0; /* Must be set */
 	var tags; /* tag msg */
-	var limit = 5; /* How many items to get */
+	var limit = 20; /* How many items to get */
 	var delay = 2000; /* How often we fetch in milliseconds */
 	var nodes_max = 50; /* maximum number of nodes in DOM */
 	var /* the freshest reult we have */
@@ -43,15 +43,23 @@
 			if (data.text.length === 0 && data.photos.length === 0) {
 				return;
 			}
+			// text
+			/*
 			$.each(data.text, function (k, node) {
 				if (sinceTimeText < node.saved_on) {
 					sinceTimeText = node.saved_on;
 				}
 				node.orange = (node.username === 'orangefeeling') ? 'orangefeeling' : '';
 				node.text = node.text.replace(re_links, '');
-				container_text.prepend(templates.screen_post.render(node)).masonry('reload');
+				var box = templates.screen_post.render(node);
+				if (sinceTimeText) {
+					$(box).hide().prependTo(container_text).slideDown();
+				} else {
+					$(box).hide().appendTo(container_text).slideDown();
+				}
 			});
-			/*
+			*/
+			// photos
 			$.each(data.photos, function (k, node) {
 				if (node.thumb_photo === null) {
 					return callback();
@@ -59,15 +67,20 @@
 				if (sinceTimePhoto < node.saved_on) {
 					sinceTimePhoto = node.saved_on;
 				}
-				// preload then insert
-				$(new Image()).attr('src', node.thumb_photo).load(function(){
+				if (sinceTimePhoto) {
 					container_photos.prepend(templates.screen_image.render(node)).masonry('reload');
+				} else {
+					container_photos.append(templates.screen_image.render(node)).masonry('reload');
+				}
+			});
+			container_photos.imagesLoaded(function(){
+				container_photos.masonry({
+					itemSelector: '.box-img'
 				});
 			});
-			*/
 			// remove > nodes_max from Masonry instance and the DOM.
-			//container_text.masonry('remove', $('#nodes .box:gt(' + (nodes_max - 1) + ')'));
-			//container_photos.masonry('remove', $('#nodes .box:gt(' + (nodes_max - 1) + ')'));
+			container_text.find('.box:gt(' + (nodes_max - 1) + ')').remove();
+			container_photos.masonry('remove', $('#nodes .box-img:gt(' + (nodes_max - 1) + ')'));
 		});
 		jqxhr.error(function(){
 			calling = false;
@@ -98,25 +111,12 @@
 		// init 
 		container_photos = $('#photos');
 		container_text = $('#text');
-		// Masonry options
-		container_text.masonry({
-			itemSelector: '.box',
-			columnWidth: function (containerWidth) {
-				return containerWidth;
-			},
-			isAnimated: true,
-			animationOptions: {
-				duration: 750,
-				easing: 'linear',
-				queue: false
-			}
-		});
+		/* Masonry options */
+		// Gignal settings
 		container_photos.masonry({
-			itemSelector: '.box',
+			itemSelector: '.box-img',
 			isAnimated: true,
-			columnWidth: function (containerWidth) {
-				return containerWidth / 3;
-			}
+			columnWidth: 80
 		});
 		// set height
 		$(document).resize(function(){

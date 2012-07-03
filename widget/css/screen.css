@@ -25,46 +25,60 @@ footer {
 	background: #000 url('../images/Gignal-light.png') center center no-repeat;
 }
 
-.avatar, .service-avatar {
-	width: 18px;
-	height: 18px;
-	float: left;
-	margin-right: 8px;
-}
-
 .owner {
-	font-size: 75%;
+	position: absolute;
+	right: 8px;
+	bottom: 0;
+	font-size: 85%;
 	white-space: nowrap;
+	text-align: right;
+	z-index: 10;
+}
+.owner img.avatar {
+	width: 73px;
+	height: 73px;
+	z-index: 10;
 }
 
 #nodes {
 	background-color: #f2f2f4;
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 .box {
 	border-bottom: 1px solid #993e00;
+	position: relative;
 }
+
 .box-img {
-	border: none;
-	display: inline-block;
-	width: 100%;
-	min-height: 50px;
+	float: left;
+	width: 80px;
 }
+.box-img:nth-child(2) {
+	width: 240px;
+}
+.box-img img {
+	display: block;
+	width: 100%;
+}
+
 #nodes .box-content {
-	padding: 8px;
+	position: relative;
+	padding: 15px;
 	word-wrap: break-word;
+	z-index: 20;
+	margin-bottom: 25px;
+}
+#nodes .box-content span {
+	background-color: rgba(242,242,244,0.8);
 }
 
 #nodes #photos {
-	height: 50%;
+	/*height: 20%;*/
 	overflow: hidden;
-}
-#nodes #photos .thumb {
-	max-width: 50%;
 }
 
 #nodes #text {
-	/*height: 50%;*/
+	/*height: 80%;*/
 	overflow: hidden;
 }
 
