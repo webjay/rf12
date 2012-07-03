@@ -98,7 +98,7 @@
 						if (data.value && data.value.items && data.value.items.length) {
 							for (var i = 0; i < 2; i++) {
 								var a = jQuery('<a/>').attr('href', data.value.items[i].link).attr('target', '_top').text(data.value.items[i].title);
-								var p = jQuery('<p/>').html(data.value.items[i].description.trunc(40));
+								var p = jQuery('<p/>').html(data.value.items[i].description.trunc(50));
 								jQuery('#news div:eq(' + i + ')').html(a).append(p);
 							}
 						}
