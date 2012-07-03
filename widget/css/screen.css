@@ -5,6 +5,7 @@ html, body {
 body {
 	font-family: "Times New Roman", Helvetica, Arial, "MS Trebuchet", sans-serif;
 	height: 100%;
+	font-size: 200%;
 }
 
 header, footer {
@@ -17,7 +18,7 @@ header {
 }
 header p {
 	color: #fff;
-	padding: 10px;
+	padding: 5%;
 	margin: 0;
 }
 footer {
@@ -38,7 +39,6 @@ footer {
 
 #nodes {
 	background-color: #f2f2f4;
-	font-size: 200%;
 	overflow: hidden;
 }
 .box {
