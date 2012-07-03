@@ -904,7 +904,7 @@ table {
 ___________________________________*/
 
 /* Generelle fix */
-.gig-widbox gig-widimgbox a img {
+.gig-widbox.gig-widimgbox a img {
     width: 180px;
 }
 
