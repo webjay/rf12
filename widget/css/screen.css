@@ -32,13 +32,13 @@ footer {
 }
 
 .owner {
-	font-size: 85%;
+	font-size: 75%;
 	white-space: nowrap;
 }
 
 #nodes {
 	background-color: #f2f2f4;
-	font-size: 250%;
+	font-size: 300%;
 	overflow: hidden;
 }
 .box {
