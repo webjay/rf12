@@ -899,3 +899,106 @@ table {
   text-align:right;
   margin-right: 53px;
 }
+
+/*  ORGANICWEB.DK IE FIX - START 
+___________________________________*/
+
+/* Generelle fix */
+.gig-widbox.gig-widimgbox a img {
+    width: 180px !important;
+}
+*:first-child+html .gig-widbox img {width: 180px !important;} * html .gig-widbox img {width: 180px !important;}
+
+
+/* add display:inline to floated elements */
+.float_left,
+.float_right,
+.img_floatLeft,
+.img_floatRight,
+.grid_1,.grid_2,.grid_3,.grid_4,.grid_5,.grid_6,.grid_7,.grid_8,.grid_9,.grid_10,.grid_11,.grid_12 {display:inline;}
+
+/* fix negative margins */
+legend,
+.news_label,
+.grid_3.musicbox {position:relative; zoom:1;}
+
+/* add zoom:1 to overflow:hidden */
+svg:not(:root) {zoom:1;}
+
+/* add zoom:1 to pos:relative elements */
+sub,
+sup,
+.push_1,
+.pull_1,
+.push_2,
+.pull_2,
+.push_3,
+.pull_3,
+.push_4,
+.pull_4,
+.push_5,
+.pull_5,
+.push_6,
+.pull_6,
+.push_7,
+.pull_7,
+.push_8,
+.pull_8,
+.push_9,
+.pull_9,
+.push_10,
+.pull_10,
+.push_11,
+.pull_11 {zoom:1;}
+
+/* add overflow:visible to (submit) buttons */
+ input, button {overflow:visible;}
+
+/* add display:inline to floated elements */
+*:first-child+html .float_left,
+*:first-child+html .float_right,
+*:first-child+html .img_floatLeft,
+*:first-child+html .img_floatRight,
+*:first-child+html .grid_1, *:first-child+html .grid_2, *:first-child+html .grid_3, *:first-child+html .grid_4, *:first-child+html .grid_5, *:first-child+html .grid_6, *:first-child+html .grid_7, *:first-child+html .grid_8, *:first-child+html .grid_9, *:first-child+html .grid_10, *:first-child+html .grid_11, *:first-child+html .grid_12 {display:inline;}
+
+/* fix negative margins */
+*:first-child+html legend,
+*:first-child+html .news_label,
+*:first-child+html .grid_3.musicbox {position:relative; zoom:1;}
+
+/* add zoom:1 to overflow:hidden */
+*:first-child+html legend,
+*:first-child+html .news_label,
+*:first-child+html .grid_3.musicbox {zoom:1;}
+
+/* add zoom:1 to pos:relative elements */
+*:first-child+html sub,
+*:first-child+html sup,
+*:first-child+html .push_1,
+*:first-child+html .pull_1,
+*:first-child+html .push_2,
+*:first-child+html .pull_2,
+*:first-child+html .push_3,
+*:first-child+html .pull_3,
+*:first-child+html .push_4,
+*:first-child+html .pull_4,
+*:first-child+html .push_5,
+*:first-child+html .pull_5,
+*:first-child+html .push_6,
+*:first-child+html .pull_6,
+*:first-child+html .push_7,
+*:first-child+html .pull_7,
+*:first-child+html .push_8,
+*:first-child+html .pull_8,
+*:first-child+html .push_9,
+*:first-child+html .pull_9,
+*:first-child+html .push_10,
+*:first-child+html .pull_10,
+*:first-child+html .push_11,
+*:first-child+html .pull_11 {zoom:1;}
+
+/* add overflow:visible to (submit) buttons */
+ *:first-child+html input[type="submit"], *:first-child+html button {overflow:visible;}
+
+/*  ORGANICWEB.DK IE FIX - END 
+___________________________________*/
