@@ -907,6 +907,7 @@ ___________________________________*/
 .gig-widbox.gig-widimgbox a img {
     width: 180px !important;
 }
+*:first-child+html .gig-widbox img {width: 180px !important;} * html .gig-widbox img {width: 180px !important;}
 
 
 /* add display:inline to floated elements */
