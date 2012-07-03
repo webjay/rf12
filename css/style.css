@@ -905,7 +905,7 @@ ___________________________________*/
 
 /* Generelle fix */
 .gig-widbox.gig-widimgbox a img {
-    width: 180px;
+    width: 180px !important;
 }
 
 
