@@ -10,19 +10,22 @@ body {
 
 header, footer {
 	height: 140px;
+	background-color: #000;
 }
 
 header {
-	background-color: #000;
 	text-align: center;
 }
 header p {
 	color: #fff;
-	padding: 5%;
+	padding: 5% 15%;
 	margin: 0;
 }
 footer {
-	background: #000 url('../images/Gignal-light.png') center center no-repeat;
+	background-image: url('../images/Gignal-light.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: auto 55%;
 }
 
 .owner {
@@ -42,7 +45,7 @@ footer {
 
 #nodes {
 	background-color: #f2f2f4;
-	/*overflow: hidden;*/
+	overflow: hidden;
 }
 .box {
 	border-bottom: 1px solid #993e00;
@@ -52,9 +55,6 @@ footer {
 .box-img {
 	float: left;
 	width: 80px;
-}
-.box-img:nth-child(2) {
-	width: 240px;
 }
 .box-img img {
 	display: block;
@@ -72,36 +72,38 @@ footer {
 	background-color: rgba(242,242,244,0.8);
 }
 
-#nodes #photos {
-	/*height: 20%;*/
+#photos {
+	border-bottom: 1px solid #993e00;
+}
+#photos, #photoshow {
+	width: 500px;
+	height: 200px;
 	overflow: hidden;
 }
 
-#nodes #text {
-	/*height: 80%;*/
+#text {
 	overflow: hidden;
 }
 
-
-/**** Masonry Transitions ****/
-.masonry, .masonry .masonry-brick {
-  -webkit-transition-duration: 0.7s;
-     -moz-transition-duration: 0.7s;
-      -ms-transition-duration: 0.7s;
-       -o-transition-duration: 0.7s;
-          transition-duration: 0.7s;
+/**** Isotope CSS3 transitions ****/
+.isotope, .isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
 }
-.masonry {
+.isotope {
   -webkit-transition-property: height, width;
      -moz-transition-property: height, width;
       -ms-transition-property: height, width;
        -o-transition-property: height, width;
           transition-property: height, width;
 }
-.masonry .masonry-brick {
-  -webkit-transition-property: left, right, top;
-     -moz-transition-property: left, right, top;
-      -ms-transition-property: left, right, top;
-       -o-transition-property: left, right, top;
-          transition-property: left, right, top;
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+       -o-transition-property:         top, left, opacity;
+          transition-property:         transform, opacity;
 }
