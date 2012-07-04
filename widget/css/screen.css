@@ -10,31 +10,37 @@ body {
 
 header, footer {
 	height: 140px;
+	background-color: #000;
 }
 
 header {
-	background-color: #000;
 	text-align: center;
 }
 header p {
 	color: #fff;
-	padding: 5%;
+	padding: 5% 15%;
 	margin: 0;
 }
 footer {
-	background: #000 url('../images/Gignal-light.png') center center no-repeat;
-}
-
-.avatar, .service-avatar {
-	width: 18px;
-	height: 18px;
-	float: left;
-	margin-right: 8px;
+	background-image: url('../images/Gignal-light.png');
+	background-position: center center;
+	background-repeat: no-repeat;
+	background-size: auto 55%;
 }
 
 .owner {
-	font-size: 75%;
+	position: absolute;
+	right: 8px;
+	bottom: 0;
+	font-size: 85%;
 	white-space: nowrap;
+	text-align: right;
+	z-index: 10;
+}
+.owner img.avatar {
+	width: 73px;
+	height: 73px;
+	z-index: 10;
 }
 
 #nodes {
@@ -43,51 +49,61 @@ footer {
 }
 .box {
 	border-bottom: 1px solid #993e00;
+	position: relative;
 }
+
 .box-img {
-	border: none;
-	display: inline-block;
+	float: left;
+	width: 80px;
+}
+.box-img img {
+	display: block;
 	width: 100%;
-	min-height: 50px;
 }
+
 #nodes .box-content {
-	padding: 8px;
+	position: relative;
+	padding: 15px;
 	word-wrap: break-word;
+	z-index: 20;
+	margin-bottom: 25px;
+}
+#nodes .box-content span {
+	background-color: rgba(242,242,244,0.8);
 }
 
-#nodes #photos {
-	height: 50%;
+#photos {
+	border-bottom: 1px solid #993e00;
+}
+#photos, #photoshow {
+	width: 500px;
+	height: 200px;
 	overflow: hidden;
 }
-#nodes #photos .thumb {
-	max-width: 50%;
-}
 
-#nodes #text {
-	/*height: 50%;*/
+#text {
 	overflow: hidden;
 }
 
-
-/**** Masonry Transitions ****/
-.masonry, .masonry .masonry-brick {
-  -webkit-transition-duration: 0.7s;
-     -moz-transition-duration: 0.7s;
-      -ms-transition-duration: 0.7s;
-       -o-transition-duration: 0.7s;
-          transition-duration: 0.7s;
+/**** Isotope CSS3 transitions ****/
+.isotope, .isotope .isotope-item {
+  -webkit-transition-duration: 0.8s;
+     -moz-transition-duration: 0.8s;
+      -ms-transition-duration: 0.8s;
+       -o-transition-duration: 0.8s;
+          transition-duration: 0.8s;
 }
-.masonry {
+.isotope {
   -webkit-transition-property: height, width;
      -moz-transition-property: height, width;
       -ms-transition-property: height, width;
        -o-transition-property: height, width;
           transition-property: height, width;
 }
-.masonry .masonry-brick {
-  -webkit-transition-property: left, right, top;
-     -moz-transition-property: left, right, top;
-      -ms-transition-property: left, right, top;
-       -o-transition-property: left, right, top;
-          transition-property: left, right, top;
+.isotope .isotope-item {
+  -webkit-transition-property: -webkit-transform, opacity;
+     -moz-transition-property:    -moz-transform, opacity;
+      -ms-transition-property:     -ms-transform, opacity;
+       -o-transition-property:         top, left, opacity;
+          transition-property:         transform, opacity;
 }
