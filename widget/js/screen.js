@@ -144,7 +144,7 @@
 		// get data now
 		fetch();
 		// get data every {delay} millisecond
-		//window.setInterval(fetch, delay);
+		window.setInterval(fetch, delay);
 	});
 
 })();
