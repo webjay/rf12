@@ -106,7 +106,8 @@
 		if (img) {
 			$('#phocus').css('background-image', 'url(' + img + ')');
 		}
-		container_photos.isotope('reLayout');
+		//container_photos.isotope('reLayout');
+		container_photos.isotope('shuffle');
 	}
 					
 	/* OnLoad */
