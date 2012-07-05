@@ -75,11 +75,26 @@ footer {
 
 #photos {
 	border-bottom: 1px solid #993e00;
+	position: relative;
 }
-#photos, #photoshow {
-	width: 500px;
-	height: 200px;
+#photos {
+	width: 100%;
 	overflow: hidden;
+}
+#photoshow {
+	z-index: 20;
+}
+#isotope1 {
+	height: 200px;
+}
+#phocus {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 200px;
+	height: 200px;
+	background-size: cover;
+	z-index: 30;
 }
 
 #text {
