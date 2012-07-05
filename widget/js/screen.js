@@ -107,7 +107,6 @@
 		if (img) {
 			$('#phocus').css('background-image', 'url(' + img + ')');
 		}
-		//container_photos.isotope('reLayout');
 		container_photos.isotope('shuffle');
 	}
 					
@@ -141,8 +140,6 @@
 		$(document).resize(function(){
 			var height = $(document).height() - ($('header').height() + $('footer').height());
 			$('#nodes').height(height);
-			//$('#photos, #photoshow').width($(document).width() + 80);
-			//$('#photoshow').width($(document).width() - 120);
 			$('#photoshow').width($(document).width() + 40);
 		});
 		$(document).resize();
