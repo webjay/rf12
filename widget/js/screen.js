@@ -4,7 +4,7 @@
 
 	var eventid = 0; /* Must be set */
 	var tags; /* tag msg */
-	var limit = 18; /* How many items to get */
+	var limit = 25; /* How many items to get */
 	var delay = 2000; /* How often we fetch in milliseconds */
 	var nodes_max = limit; /* maximum number of nodes in DOM */
 	var /* the freshest reult we have */
