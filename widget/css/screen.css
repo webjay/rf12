@@ -90,8 +90,9 @@ footer {
 #phocus {
 	position: absolute;
 	top: 0;
-	right: 0;
-	width: 200px;
+	/*right: 0;*/
+	left: 80px;
+	width: 240px;
 	height: 200px;
 	background-size: cover;
 	z-index: 30;

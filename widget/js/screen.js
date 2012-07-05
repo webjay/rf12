@@ -92,6 +92,7 @@
 			//phocus();
 			// remove > nodes_max from Isotope instance and the DOM.
 			container_photos.isotope('remove', $('#nodes .box-img').slice(nodes_max - 1));
+			container_photos.isotope('reLayout');
 			// shufflesize
 			shufflesizer = window.setInterval(phocus, 8000);
 		});
@@ -141,7 +142,8 @@
 			var height = $(document).height() - ($('header').height() + $('footer').height());
 			$('#nodes').height(height);
 			//$('#photos, #photoshow').width($(document).width() + 80);
-			$('#photoshow').width($(document).width() - 120);
+			//$('#photoshow').width($(document).width() - 120);
+			$('#photoshow').width($(document).width() + 40);
 		});
 		$(document).resize();
 		// ajaxSetup
