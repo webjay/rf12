@@ -12,6 +12,7 @@
 	var /* the oldest reult we have */
 		firstTimePhoto = 0,
 		firstTimeText = 0;
+	var cid = 0; /* for caching */
 	var more_fetch_num = 0; /* how many times we fetched older data */
 	var calling = false; /* makes sure only one getJSON runs at a time */
 	var container; /* where to put content */
@@ -78,12 +79,14 @@
 				offset: offset
 			};
 		}
+		options.cid = cid++;
 		try {
 			var jqxhr = jQuery.getJSON(url, options, function (data) {
 				calling = false;
 				if (data.text.length === 0 && data.photos.length === 0) {
 					return;
 				}
+				cid = 0;
 				for (var n = 0; n < limit; n++) {
 					if (data.text[n]) {
 						node_text(data.text[n], prepend);
@@ -117,7 +120,7 @@
 		// ajaxSetup
 		jQuery.ajaxSetup({
 			jsonpCallback: 'callme',
-			cache: false,
+			cache: true,
 			timeout: 5000
 		});
 		// init 
