@@ -1,25 +1,31 @@
 (function(){
-	
+
 	'use strict';
-	
-	var eventid = 7; /* Must be set */
+
+	var eventid = 7; /* Event id must be set */
 	var limit = 10; /* How many items to get */
 	var delay = 5000; /* How often we fetch in milliseconds */
 	var nodes_max = 1000; /* maximum number of nodes in DOM */
 	var /* the freshest reult we have */
-		sinceTimePhoto = 0,
-		sinceTimeText = 0;
+		sinceIdPhoto = 0,
+		sinceIdText = 0;
 	var /* the oldest reult we have */
-		firstTimePhoto = 0,
-		firstTimeText = 0;
+		firstIdPhoto = 0,
+		firstIdText = 0;
 	var cid = 0; /* for caching */
 	var more_fetch_num = 0; /* how many times we fetched older data */
 	var calling = false; /* makes sure only one getJSON runs at a time */
 	var container; /* where to put content */
 	var api_url = 'http://api.gignal.com/event/api/eventId/';
-	var date_re = /(\d+)/g;
-	var re_links = /(\b(https?|ftp|file):\/\/[\-A-Z0-9+&@#\/%?=~_|!:,.;]*[\-A-Z0-9+&@#\/%=~_|])/ig;
-	
+	var re_links = /(\b(https?):\/\/[\-A-Z0-9+&@#\/%?=~_|!:,.;]*[\-A-Z0-9+&@#\/%=~_|])/ig;
+
+	// ajax setup
+	jQuery.ajaxSetup({
+		jsonpCallback: 'callme',
+		cache: true,
+		timeout: 10000
+	});
+
 	function push (box, prepend) {
 		if (prepend) {
 			container.prepend(box).masonry('reload');
@@ -29,11 +35,11 @@
 	}
 
 	function node_text (node, prepend) {
-		if (sinceTimeText < node.saved_on) {
-			sinceTimeText = node.saved_on;
+		if (sinceIdText < node.text_stream_id) {
+			sinceIdText = node.text_stream_id;
 		}
-		if (firstTimeText > node.saved_on || firstTimeText === 0) {
-			firstTimeText = node.saved_on;
+		if (firstIdText > node.text_stream_id || firstIdText === 0) {
+			firstIdText = node.text_stream_id;
 		}
 		node.orange = (node.username === 'orangefeeling') ? 'orangefeeling' : '';
 		node.profilelink = 'http://' + node.service + '.com/';
@@ -41,41 +47,42 @@
 		node.text = node.text.replace(re_links, '<a href="$1" target="_top" class="nodelink">link</a>');
 		push(templates.frame_post.render(node), prepend);
 	}
-	
+
 	function node_photo (node, prepend) {
 		if (node.thumb_photo === null) {
 			return;
 		}
-		if (sinceTimePhoto < node.saved_on) {
-			sinceTimePhoto = node.saved_on;
+		if (sinceIdPhoto < node.photo_stream_id) {
+			sinceIdPhoto = node.photo_stream_id;
 		}
-		if (firstTimePhoto > node.saved_on || firstTimePhoto === 0) {
-			firstTimePhoto = node.saved_on;
+		if (firstIdPhoto > node.photo_stream_id || firstIdPhoto === 0) {
+			firstIdPhoto = node.photo_stream_id;
 		}
 		node.profilelink = 'http://' + node.service + '.com/';
 		node.profilelink += (node.username.length) ? node.username : node.user_id;
 		push(templates.frame_image.render(node), prepend);
 	}
-	
+
 	function fetch (prepend) {
 		if (calling) {
 			return;
 		}
 		calling = true;
 		var url = api_url + eventid + '?callback=?';
+		var options = {};
 		if (prepend) {
-			var options = {
+			options = {
 				limit: limit,
-				sinceTimePhoto: sinceTimePhoto,
-				sinceTimeText: sinceTimeText
+				sinceIdPhoto: sinceIdPhoto,
+				sinceIdText: sinceIdText
 			};
 		} else {
 			more_fetch_num++;
 			var offset = more_fetch_num * limit;
-			var options = {
+			options = {
 				limit: (limit / 2),
-				sinceTimePhoto: firstTimePhoto,
-				sinceTimeText: firstTimeText,
+				sinceIdPhoto: firstIdPhoto,
+				sinceIdText: firstIdText,
 				offset: offset
 			};
 		}
@@ -108,22 +115,28 @@
 			calling = false;
 		}
 	}
-	
+
 	function Gignal_more () {
-		var bottom = $('#nodes').height();
-		$('html, body').animate({ scrollTop: bottom }, 2000);
+		var bottom = jQuery('#nodes').height();
+		jQuery('html, body').animate({ scrollTop: bottom }, 2000);
 		fetch(false);
 	}
-	
+
+	function modal_img (e) {
+		e.preventDefault();
+		jQuery(new Image()).attr('src', jQuery(this).attr('href')).modal({
+			autoResize: true,
+			position: ['3%'],
+			minWidth: 400,
+			maxWidth: 415,
+			maxHeight: 500,
+			overlayClose: true
+		});
+	}
+
 	/* OnLoad */
 	jQuery(document).ready(function($){
-		// ajaxSetup
-		jQuery.ajaxSetup({
-			jsonpCallback: 'callme',
-			cache: true,
-			timeout: 5000
-		});
-		// init 
+		// init
 		container = $('#nodes');
 		// Masonry options
 		container.masonry({
@@ -140,21 +153,9 @@
 		// get data every {delay} millisecond
 		window.setInterval(fetch, delay, true);
 		// load more
-		$(document).on('click', '.gig-morebtn', function(){
-			Gignal_more();
-		});
+		$(document).on('click', '.gig-morebtn', Gignal_more);
 		// modal click event
-		$(document).on('click', '.modal', function (e) {
-			e.preventDefault();
-			$(new Image()).attr('src', $(this).attr('href')).modal({
-				autoResize: true,
-				position: ['3%'],
-				minWidth: 400,
-				maxWidth: 415,
-				maxHeight: 500,
-				overlayClose: true
-			});
-		});
+		$(document).on('click', '.modal', modal_img);
 	});
 
 })();
