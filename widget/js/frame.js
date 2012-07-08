@@ -9,7 +9,7 @@
 	var /* the freshest reult we have */
 		sinceIdPhoto = 0,
 		sinceIdText = 0;
-	var /* the oldest reult we have */
+	var /* the oldest result we have */
 		firstIdPhoto = 0,
 		firstIdText = 0;
 	var cid = 0; /* for caching */
