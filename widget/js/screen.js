@@ -40,7 +40,7 @@
 			return;
 		}
 		calling = true;
-		var url = api_url + eventid + '?callback=?';
+		var url = api_url + eventid;
 		var options = {
 			limit: limit,
 			sinceTimePhoto: sinceTimePhoto,

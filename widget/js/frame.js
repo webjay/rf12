@@ -21,7 +21,6 @@
 
 	// ajax setup
 	jQuery.ajaxSetup({
-		jsonpCallback: 'callme',
 		cache: true,
 		timeout: 10000
 	});
@@ -68,7 +67,7 @@
 			return;
 		}
 		calling = true;
-		var url = api_url + eventid + '?callback=?';
+		var url = api_url + eventid;
 		var options = {};
 		if (prepend) {
 			options = {
